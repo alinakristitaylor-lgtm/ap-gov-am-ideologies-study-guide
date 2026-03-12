@@ -27,7 +27,10 @@
         }
 
         /* Navigation */
-        .nav-container { display: flex; width: 100%; max-width: 850px; margin-bottom: -2px; z-index: 10; }
+       <div class="nav-container">
+    <button id="tab-home" class="tab-btn active" onclick="showTab('home')">🏠 Home</button>
+    <button id="tab-units" class="tab-btn" onclick="showTab('units')">📚 Curriculum</button>
+</div>
         .tab-btn { flex: 1; padding: 18px; border: none; background: rgba(255,255,255,0.2); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; border-radius: 15px 15px 0 0; transition: 0.3s; backdrop-filter: blur(5px); }
         .tab-btn.active { background: var(--white); color: var(--primary); box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
 
@@ -80,19 +83,28 @@
         <p>Master your unit exam with our specialized tools. Select a mode above or click a card below to begin your session.</p>
         
         <div class="home-grid">
-            <div class="home-card" onclick="showTab('quiz')">
-                <span class="icon">📖</span>
-                <h3>Term Trivia</h3>
-                <p>Master all 35 vocabulary terms from the curriculum, from Political Socialization to Fiscal Policy. Includes instant feedback and a final review list.</p>
-            </div>
-            <div class="home-card" onclick="showTab('frq')">
-                <span class="icon">📉</span>
-                <h3>Data Analysis</h3>
-                <p>Practice FRQ #2 (Quantitative Analysis). Interpret charts, tables, and line graphs. Use the rubric to self-score your responses.</p>
+            <div id="home-content">
+    <h1 style="color: var(--primary);">AP Government Study Portal</h1>
+    <p>Select a unit to start your review session:</p>
+    
+    <div class="home-grid">
+        <div class="unit-card" onclick="showUnit('unit4')">
+            <div class="icon-circle">04</div>
+            <div class="unit-info">
+                <h3>Unit 4: American Political Ideologies</h3>
+                <p>Public opinion, socialization, and economic policy.</p>
             </div>
         </div>
-        <p style="margin-top:40px; color: #888; font-size: 0.9rem;">Designed for AP® Government & Politics Standards</p>
+        
+        <div class="unit-card" onclick="showUnit('unit1')">
+            <div class="icon-circle">01</div>
+            <div class="unit-info">
+                <h3>Unit 1: Foundations of Democracy</h3>
+                <p>Constitution, Federalism, and Core Principles.</p>
+            </div>
+        </div>
     </div>
+</div>
 
     <div id="quiz-content" class="hidden">
         <div class="progress-box"><div id="bar"></div></div>
@@ -245,8 +257,19 @@ function toggleRubric() {
     const r = document.getElementById('frq-rubric');
     r.style.display = (r.style.display === 'block') ? 'none' : 'block';
 }
+    // This function hides the dashboard and shows the specific unit module
+function showUnit(unitKey) {
+    document.getElementById('home-content').classList.add('hidden');
+    // Set global currentUnit variable so your trivia/FRQ logic knows where to look
+    currentUnit = unitKey;
+    
+    // Show the Unit Dashboard (the one where you choose Trivia or FRQ)
+    document.getElementById('unit-menu').classList.remove('hidden');
+    document.getElementById('unit-title').innerText = data[unitKey].title;
+}
 </script>
 </body>
 
 </html>
+
 
