@@ -30,6 +30,8 @@
         textarea { width: 100%; height: 150px; border-radius: 10px; padding: 15px; margin-top: 10px; border: 2px solid #ddd; font-family: inherit; font-size: 1rem; }
         .rubric-box { display: none; background: #fff3cd; border-left: 6px solid #ffc107; padding: 15px; margin-top: 15px; text-align: left; }
         #review-list { text-align: left; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #ddd; }
+        /* Graph Styling */
+        .graph-container { background: #fdfdfd; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin: 15px 0; display: flex; justify-content: center; }
     </style>
 </head>
 <body>
@@ -45,9 +47,9 @@
         <div class="home-grid">
             <div class="unit-card" onclick="showUnit('unit1')"><div class="icon-circle">01</div><h3>Foundations of Democracy</h3></div>
             <div class="unit-card" onclick="showUnit('unit2')"><div class="icon-circle">02</div><h3>Branches & Federalism</h3></div>
-            <div class="unit-card" onclick="showUnit('unit3')"><div class="icon-circle">03</div><h3>Civil Liberties (Coming)</h3></div>
+            <div class="unit-card" onclick="showUnit('unit3')"><div class="icon-circle">03</div><h3>Civil Liberties & Rights</h3></div>
             <div class="unit-card" onclick="showUnit('unit4')"><div class="icon-circle">04</div><h3>Political Ideologies</h3></div>
-            <div class="unit-card" onclick="showUnit('unit5')"><div class="icon-circle">05</div><h3>Participation (Coming)</h3></div>
+            <div class="unit-card" onclick="showUnit('unit5')"><div class="icon-circle">05</div><h3>Political Participation</h3></div>
         </div>
     </div>
 
@@ -80,6 +82,7 @@
 
     <div id="frq-content" class="hidden">
         <h2 id="frq-header" style="color: var(--primary)"></h2>
+        <div id="frq-graph" class="graph-container hidden"></div>
         <div id="frq-display" style="text-align: left;"></div>
         <textarea id="user-ans" placeholder="Type your practice response here..."></textarea>
         <button class="action-btn" onclick="toggleRubric()">Show/Hide Rubric</button>
@@ -110,8 +113,19 @@ const data = {
             {q: "Division of power between national and state governments.", a: "Federalism", options: ["Federalism", "Unitary System", "Confederation", "Devolution"]}
         ],
         frqs: [
-            {title: "Quantitative Analysis", prompts: "A) Identify the trend in federal grants to states. B) Describe a reason for categorical grants. C) Explain Cooperative Federalism.", rubric: "Grants increased over time. Money used to meet national goals. Blurring of lines between levels."},
-            {title: "Concept Application", prompts: "Scenario: President issues an immigration order. States sue. A) Judicial role? B) Separation of Powers? C) Congressional response?", rubric: "A: Judicial Review. B: Branches limit actions. C: Legislation or funding cut."}
+            {
+                title: "Quantitative Analysis", 
+                prompts: "A) Identify the trend in federal grants to states using the provided chart. B) Describe a reason for the rise in categorical grants since 1960. C) Explain how Cooperative Federalism (Marble Cake) is reflected in this data.", 
+                graph: `<svg width="400" height="200" viewBox="0 0 400 200">
+                    <line x1="40" y1="180" x2="380" y2="180" stroke="#333" stroke-width="2"/>
+                    <line x1="40" y1="20" x2="40" y2="180" stroke="#333" stroke-width="2"/>
+                    <text x="200" y="195" font-size="12" text-anchor="middle">Year (1960 - 2020)</text>
+                    <text x="15" y="100" font-size="12" transform="rotate(-90, 15, 100)" text-anchor="middle">Grants ($ Billions)</text>
+                    <polyline fill="none" stroke="#1e3799" stroke-width="3" points="40,170 100,160 160,140 220,110 280,70 340,40 380,25" />
+                    <text x="200" y="15" font-size="14" font-weight="bold" text-anchor="middle">Federal Grants-in-Aid Trend</text>
+                </svg>`,
+                rubric: "Grants increased significantly over time. Money used to meet national goals like education or health. Blurring of lines between levels where feds provide funds for state-run programs."
+            }
         ]
     },
     unit2: {
@@ -168,14 +182,9 @@ const data = {
                 title: "Type 4: SCOTUS Comparison",
                 prompts: "A) Identify the constitutional clause common to both <b>Engel v. Vitale</b> and <b>Wisconsin v. Yoder</b>.<br>B) Describe the difference in the rulings of these two cases.<br>C) Explain how these cases reflect the tension between government power and individual religious liberty.",
                 rubric: "A: 1st Amendment (Religion). B: Engel struck down prayer (Establishment); Yoder protected practice (Free Exercise). C: Governments must balance neutrality (no official religion) with freedom (allowing practice)."
-            },
-            {
-                title: "Concept Application (Rights of Accused)",
-                prompts: "Scenario: A man is arrested but not told he has the right to an attorney. He confesses to a crime.<br>A) Identify the Supreme Court case that governs this scenario.<br>B) Describe the <b>Exclusionary Rule</b>.<br>C) Explain how the <b>Due Process Clause</b> of the 14th Amendment applies here.",
-                rubric: "A: Miranda v. Arizona or Gideon v. Wainwright. B: Illegally obtained evidence is thrown out. C: It incorporates the Bill of Rights to ensure states follow fair procedures."
             }
         ]
-    }
+    },
     unit4: {
         title: "Unit 4: Ideologies",
         trivia: [
@@ -192,9 +201,24 @@ const data = {
             {q: "Measure of goods prices to track inflation.", a: "Consumer Price Index (CPI)", options: ["Consumer Price Index (CPI)", "GDP", "Unemployment", "Monetary"]},
             {q: "Ideology favoring minimal government in all areas.", a: "Libertarianism", options: ["Libertarianism", "Progressivism", "Liberalism", "Conservatism"]}
         ],
-        frqs: [{title: "Quantitative Analysis", prompts: "Interpret the relationship between ideology and policy support.", rubric: "Liberals tend to support regulation; Conservatives support free market."}]
-    }
-};
+        frqs: [
+            {
+                title: "Quantitative Analysis", 
+                prompts: "A) Identify which ideology shows the highest support for environmental regulation. B) Describe the relationship between ideology and support for market intervention. C) Explain how these views affect party platforms.", 
+                graph: `<svg width="400" height="200" viewBox="0 0 400 200">
+                    <rect x="50" y="30" width="80" height="140" fill="#1e3799" />
+                    <rect x="160" y="80" width="80" height="90" fill="#4a69bd" />
+                    <rect x="270" y="130" width="80" height="40" fill="#eb2f06" />
+                    <text x="90" y="185" font-size="12" text-anchor="middle">Liberal</text>
+                    <text x="200" y="185" font-size="12" text-anchor="middle">Moderate</text>
+                    <text x="310" y="185" font-size="12" text-anchor="middle">Conservative</text>
+                    <text x="200" y="20" font-size="14" font-weight="bold" text-anchor="middle">Support for Emission Regulation (%)</text>
+                    <line x1="40" y1="170" x2="380" y2="170" stroke="#333" stroke-width="2"/>
+                </svg>`,
+                rubric: "Liberals show highest support. As ideology becomes more conservative, support for government regulation tends to decrease. This leads to distinct party platforms (Democrats favoring regulation, Republicans favoring market solutions)."
+            }
+        ]
+    },
     unit5: {
         title: "Unit 5: Political Participation",
         trivia: [
@@ -217,11 +241,22 @@ const data = {
         frqs: [
             {
                 title: "Quantitative Analysis (Voter Turnout)",
-                prompts: "<b>Data:</b> Midterm turnout is historically 40%, while Presidential turnout is 60%.<br>A) Identify the trend in voter turnout between elections.<br>B) Describe one reason for the difference in turnout.<br>C) Explain how <b>Demographics</b> (age or education) influence turnout.",
-                rubric: "A: Presidential elections have higher turnout. B: Greater media coverage/perceived importance. C: Older/more educated citizens vote at higher rates."
+                prompts: "A) Identify the turnout percentage for Presidential vs Midterm elections in the graph. B) Describe one reason for this disparity. C) Explain how registration laws impact these numbers.",
+                graph: `<svg width="400" height="200" viewBox="0 0 400 200">
+                    <rect x="80" y="90" width="100" height="80" fill="#4a69bd" />
+                    <rect x="220" y="50" width="100" height="120" fill="#eb2f06" />
+                    <text x="130" y="185" font-size="12" text-anchor="middle">Midterm</text>
+                    <text x="270" y="185" font-size="12" text-anchor="middle">Presidential</text>
+                    <text x="130" y="85" font-size="12" text-anchor="middle" font-weight="bold">40%</text>
+                    <text x="270" y="45" font-size="12" text-anchor="middle" font-weight="bold">60%</text>
+                    <text x="200" y="20" font-size="14" font-weight="bold" text-anchor="middle">Voter Turnout Comparison</text>
+                    <line x1="40" y1="170" x2="360" y2="170" stroke="#333" stroke-width="2"/>
+                </svg>`,
+                rubric: "Presidential: 60%, Midterm: 40%. Reasons: Higher media visibility, perceived importance of the President. Burdensome registration can lower turnout."
             }
         ]
     }
+};
 
 let currentUnit = '';
 let qIdx = 0;
@@ -309,18 +344,35 @@ function showResults() {
 }
 
 function startFRQ() {
-    if (!data[currentUnit].frqs || data[currentUnit].frqs.length === 0) {
+    const unitData = data[currentUnit];
+    if (!unitData.frqs || unitData.frqs.length === 0) {
         alert("FRQ for this unit coming soon!"); return;
     }
     document.getElementById('unit-menu').classList.add('hidden');
     document.getElementById('frq-content').classList.remove('hidden');
-    const frq = data[currentUnit].frqs[frqIdx];
+    
+    // Safety check for index
+    if (frqIdx >= unitData.frqs.length) frqIdx = 0;
+    
+    const frq = unitData.frqs[frqIdx];
     document.getElementById('frq-header').innerText = frq.title;
     document.getElementById('frq-display').innerHTML = `<p style="background:#eee; padding:20px; border-radius:10px; line-height:1.6;">${frq.prompts}</p>`;
+    
+    // Handle Graph rendering
+    const gBox = document.getElementById('frq-graph');
+    if (frq.graph) {
+        gBox.innerHTML = frq.graph;
+        gBox.classList.remove('hidden');
+    } else {
+        gBox.classList.add('hidden');
+    }
+
     document.getElementById('frq-rubric').innerHTML = `<strong>Scoring Rubric:</strong><br>${frq.rubric}`;
     document.getElementById('frq-rubric').style.display = 'none';
     document.getElementById('user-ans').value = '';
-    frqIdx = (frqIdx + 1) % data[currentUnit].frqs.length;
+    
+    // Cycle to next FRQ for next session
+    frqIdx = (frqIdx + 1) % unitData.frqs.length;
 }
 
 function toggleRubric() {
