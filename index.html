@@ -60,6 +60,16 @@
     </div>
 
     <div id="quiz-content" class="hidden">
+        <div id="quiz-results" class="hidden">
+        <h2 style="color: var(--primary)">Unit Review Complete!</h2>
+        <div id="grade-display" style="font-size: 2rem; font-weight: bold; margin: 20px 0;"></div>
+        <div id="review-list" style="text-align: left; background: #f8f9fa; padding: 20px; border-radius: 10px; max-height: 300px; overflow-y: auto; border: 1px solid #ddd;">
+            <h3 style="margin-top: 0;">Review these terms:</h3>
+            <ul id="missed-questions"></ul>
+        </div>
+        <button class="action-btn" onclick="resetUnit()">Study Again</button>
+        <button class="action-btn" style="background:#666" onclick="showTab('home')">Home</button>
+    </div>
         <div class="progress-box"><div id="bar"></div></div>
         <h2 id="q-text" style="color: var(--primary)"></h2>
         <div id="opt-container" class="opt-grid"></div>
@@ -82,11 +92,38 @@ const data = {
     unit1: {
         title: "Unit 1: Foundations",
         trivia: [
-            {q: "Compromise that created a bicameral legislature.", a: "Great Compromise", options: ["Great Compromise", "3/5ths Compromise", "New Jersey Plan", "Virginia Plan"]},
-            {q: "System where power is divided between national and state levels.", a: "Federalism", options: ["Federalism", "Unitary", "Confederacy", "Democracy"]}
+            {q: "The set of rules, institutions, and people who exercise political authority over a group.", a: "Government", options: ["Government", "Politics", "Democracy", "State Sovereignty"]},
+            {q: "The process of determining who gets what, when, and how in a society.", a: "Politics", options: ["Politics", "Public Policy", "Civics", "Federalism"]},
+            {q: "A system of government where power is vested in the people.", a: "Democracy", options: ["Democracy", "Autocracy", "Theocracy", "Oligarchy"]},
+            {q: "The widely shared beliefs, values, and norms about how citizens relate to government and to one another.", a: "American Political Culture", options: ["American Political Culture", "Political Ideology", "Socialization", "Partisanship"]},
+            {q: "The structures of government, such as the presidency, Congress, and the courts, that create and enforce public policy.", a: "Political Institutions", options: ["Political Institutions", "Interest Groups", "Political Parties", "Bureaucracy"]},
+            {q: "A government where representatives are elected by the people and operate under a supreme law (Constitution).", a: "Constitutional Republic", options: ["Constitutional Republic", "Direct Democracy", "Monarchy", "Confederation"]},
+            {q: "The document that established the philosophical foundations of popular sovereignty and natural rights.", a: "Declaration of Independence", options: ["Declaration of Independence", "Articles of Confederation", "Constitution", "Federalist No. 10"]},
+            {q: "The supreme law of the United States that provides the framework for the federal government.", a: "The Constitution", options: ["The Constitution", "Bill of Rights", "Mayflower Compact", "Magna Carta"]},
+            {q: "The first ten amendments to the Constitution, which protect individual liberties.", a: "Bill of Rights", options: ["Bill of Rights", "Preamble", "Article I", "Federalist Papers"]},
+            {q: "Formal changes or additions made to the U.S. Constitution over time.", a: "Amendments", options: ["Amendments", "Executive Orders", "Statutes", "Ratifications"]},
+            {q: "The three distinct parts of the U.S. government defined by Articles I, II, and III.", a: "Legislative, Executive and Judicial", options: ["Legislative, Executive and Judicial", "Federal, State, and Local", "Senate, House, and Cabinet", "President, VP, and Speaker"]},
+            {q: "The division of government power among three branches to prevent any one from becoming too powerful.", a: "Separation of Powers", options: ["Separation of Powers", "Checks and Balances", "Federalism", "Popular Sovereignty"]},
+            {q: "A system that allows each branch of government to limit the powers of the other branches.", a: "Checks and Balances", options: ["Checks and Balances", "Separation of Powers", "Interposition", "Judicial Activism"]},
+            {q: "A system where power is divided between the national government and state governments.", a: "Federalism", options: ["Federalism", "Unitary System", "Confederation", "Devolution"]}
         ],
-        frqs: [{title: "Separation of Powers", prompts: "Explain how checks and balances limit presidential power.", rubric: "Mention veto override, appointment confirmation, and impeachment."}]
-    },
+        frqs: [
+            {
+                title: "Type 1: Quantitative Analysis (Federalism)",
+                prompts: "<b>Table: Federal Grants to States (2000-2020)</b><br>2000: $285B | 2010: $512B | 2020: $721B<br><br>A) Identify the trend in federal grants to states.<br>B) Describe a reason why the federal government provides categorical grants to states.<br>C) Explain how the data reflects the concept of <b>Cooperative Federalism</b>.",
+                rubric: "A: Federal grants have increased steadily. B: To encourage states to meet national standards or goals (e.g., education). C: It shows the 'blurring' of lines between levels as the national government uses money to influence state policy."
+            },
+            {
+                title: "Type 2: Concept Application (Checks & Balances)",
+                prompts: "<b>Scenario:</b> The President issues an Executive Order regarding immigration. Several state governors sue, claiming the President exceeded his constitutional authority.<br><br>A) Describe the role of the <b>Judicial Branch</b> in this scenario.<br>B) Explain how <b>Separation of Powers</b> is intended to prevent the President from having unlimited power.<br>C) Describe one way Congress could respond if they disagree with the Executive Order.",
+                rubric: "A: The courts can use Judicial Review to declare the order unconstitutional. B: By dividing power into three branches, no single branch can act without oversight. C: Congress could pass a law to override the order or withhold funding for its implementation."
+            },
+            {
+                title: "Type 3: Comparison (Foundational Docs)",
+                prompts: "<b>Comparison:</b> Federalist No. 10 vs. Brutus No. 1<br><br>A) Identify the main fear <b>Brutus No. 1</b> had regarding a large republic.<br>B) Describe how <b>Federalist No. 10</b> argued that a large republic would actually protect liberty.<br>C) Explain how the <b>Great Compromise</b> addressed the tension between large and small states during the convention.",
+                rubric: "A: Fear that a central government would become too distant and tyrannical. B: Madison argued 'factions' would cancel each other out in a large republic. C: It created a bicameral legislature (House by population, Senate by equal vote)."
+            }
+        ],
     unit2: { title: "Unit 2: Branches", trivia: [], frqs: [] },
     unit3: { title: "Unit 3: Civil Rights", trivia: [], frqs: [] },
     unit4: {
@@ -133,32 +170,23 @@ const data = {
     unit5: { title: "Unit 5: Participation", trivia: [], frqs: [] }
 };
 
-let currentUnit = '';
 let qIdx = 0;
 let score = 0;
-
-function showTab(type) {
-    document.getElementById('home-content').classList.remove('hidden');
-    document.getElementById('unit-menu').classList.add('hidden');
-    document.getElementById('quiz-content').classList.add('hidden');
-    document.getElementById('frq-content').classList.add('hidden');
-}
-
-function showUnit(key) {
-    currentUnit = key;
-    document.getElementById('home-content').classList.add('hidden');
-    document.getElementById('unit-menu').classList.remove('hidden');
-    document.getElementById('unit-title').innerText = data[key].title;
-}
+let missedQuestions = []; // New array to track errors
 
 function startTrivia() {
     if (data[currentUnit].trivia.length === 0) {
         alert("Trivia for this unit is coming soon!");
         return;
     }
+    // Reset variables for a fresh game
+    qIdx = 0; 
+    score = 0; 
+    missedQuestions = []; 
+    
     document.getElementById('unit-menu').classList.add('hidden');
+    document.getElementById('quiz-results').classList.add('hidden'); // Hide results if re-playing
     document.getElementById('quiz-content').classList.remove('hidden');
-    qIdx = 0; score = 0;
     loadQ();
 }
 
@@ -179,20 +207,55 @@ function loadQ() {
         btn.onclick = () => {
             const btns = document.querySelectorAll('.btn-opt');
             btns.forEach(b => b.disabled = true);
-            if(opt === q.a) { btn.classList.add('correct'); score++; }
-            else { btn.classList.add('wrong'); }
+            
+            if(opt === q.a) { 
+                btn.classList.add('correct'); 
+                score++; 
+            } else { 
+                btn.classList.add('wrong'); 
+                // Save the missed question info
+                missedQuestions.push({question: q.q, correct: q.a});
+                // Highlight the correct one for the user
+                btns.forEach(b => { if(b.innerText === q.a) b.classList.add('correct'); });
+            }
             
             setTimeout(() => {
                 qIdx++;
                 if(qIdx < unitTrivia.length) loadQ();
-                else {
-                    alert(`Unit Review Complete! Score: ${score}/${unitTrivia.length}`);
-                    resetUnit();
-                }
-            }, 1000);
+                else showResults();
+            }, 1200); // Slightly longer pause so they can see the right answer
         };
         container.appendChild(btn);
     });
+}
+
+function showResults() {
+    const unitTrivia = data[currentUnit].trivia;
+    document.getElementById('quiz-content').classList.add('hidden');
+    document.getElementById('quiz-results').classList.remove('hidden');
+    
+    // Calculate Grade
+    const percent = Math.round((score / unitTrivia.length) * 100);
+    let letterGrade = percent >= 90 ? "A 🇺🇸" : percent >= 80 ? "B" : percent >= 70 ? "C" : "D";
+    if (percent < 65) letterGrade = "F (Keep Studying!)";
+
+    document.getElementById('grade-display').innerHTML = `
+        <span style="color: ${percent >= 70 ? 'var(--success)' : 'var(--accent)'}">
+            ${percent}% - Grade: ${letterGrade}
+        </span><br>
+        <small>${score} out of ${unitTrivia.length} correct</small>
+    `;
+
+    // Populate Review List
+    const list = document.getElementById('missed-questions');
+    list.innerHTML = '';
+    if (missedQuestions.length === 0) {
+        list.innerHTML = "<li>🎉 Perfect score! You mastered this unit.</li>";
+    } else {
+        missedQuestions.forEach(item => {
+            list.innerHTML += `<li style="margin-bottom:10px;"><strong>Q:</strong> ${item.question}<br><span style="color:var(--success)"><strong>Correct Answer:</strong> ${item.correct}</span></li>`;
+        });
+    }
 }
 
 function startFRQ() {
