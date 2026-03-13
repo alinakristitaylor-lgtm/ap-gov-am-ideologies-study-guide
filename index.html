@@ -10,80 +10,82 @@
         body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e3799 0%, #eb2f06 100%); min-height: 100vh; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .nav-container { display: flex; width: 100%; max-width: 850px; margin-bottom: -2px; }
         .tab-btn { flex: 1; padding: 15px; border: none; background: rgba(255,255,255,0.2); color: white; font-weight: bold; cursor: pointer; border-radius: 15px 15px 0 0; }
-        #main-card { background: var(--white); width: 100%; max-width: 850px; border-radius: 0 0 20px 20px; padding: 2.5rem; min-height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); box-sizing: border-box; }
+        #main-card { background: var(--white); width: 100%; max-width: 850px; border-radius: 0 0 20px 20px; padding: 2.5rem; min-height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); box-sizing: border-box; text-align: center; }
         .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .unit-card { background: #f8f9fa; border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; }
+        .unit-card { background: #f8f9fa; border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; text-align: left; }
         .unit-card:hover { border-color: var(--secondary); transform: translateY(-3px); }
         .icon-circle { background: var(--primary); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
         .mode-select { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .mode-btn { padding: 20px; border: 2px solid var(--secondary); border-radius: 12px; background: white; color: var(--primary); font-weight: bold; cursor: pointer; }
+        .mode-btn { padding: 20px; border: 2px solid var(--secondary); border-radius: 12px; background: white; color: var(--primary); font-weight: bold; cursor: pointer; font-size: 1.1rem; }
         .mode-btn:hover { background: var(--secondary); color: white; }
         .hidden { display: none; }
         .action-btn { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; font-weight: bold; }
-        /* Game Styles */
+        /* Trivia Styles */
         .progress-box { width: 100%; background: #eee; height: 14px; border-radius: 7px; margin-bottom: 2rem; overflow: hidden; }
         #bar { width: 0%; height: 100%; background: linear-gradient(90deg, #4a69bd, #eb2f06); transition: 0.4s; }
         .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn-opt { padding: 16px; border: 2px solid #dcdde1; border-radius: 12px; background: #f8f9fa; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-opt { padding: 16px; border: 2px solid #dcdde1; border-radius: 12px; background: #f8f9fa; cursor: pointer; font-weight: 600; font-size: 1rem; }
         .correct { background: var(--success) !important; color: white !important; border-color: var(--success) !important; }
         .wrong { background: var(--accent) !important; color: white !important; border-color: var(--accent) !important; }
-        textarea { width: 100%; height: 120px; border-radius: 10px; padding: 10px; margin-top: 10px; border: 2px solid #ddd; }
+        textarea { width: 100%; height: 150px; border-radius: 10px; padding: 15px; margin-top: 10px; border: 2px solid #ddd; font-family: inherit; font-size: 1rem; }
         .rubric-box { display: none; background: #fff3cd; border-left: 6px solid #ffc107; padding: 15px; margin-top: 15px; text-align: left; }
+        #review-list { text-align: left; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
 <div class="nav-container">
-    <button id="tab-home" class="tab-btn" onclick="showTab('home')" style="background: var(--white); color: var(--primary);">🏠 Home</button>
+    <button class="tab-btn" onclick="showTab('home')" style="background: var(--white); color: var(--primary);">🏠 AP GOV PORTAL</button>
 </div>
 
 <div id="main-card">
     <div id="home-content">
-        <h1>AP Government Study Portal</h1>
-        <p>Select a unit to begin your review:</p>
+        <h1 style="color: var(--primary)">AP Government Study Suite</h1>
+        <p>Select a unit to start practicing:</p>
         <div class="home-grid">
-            <div class="unit-card" onclick="showUnit('unit1')"><div class="icon-circle">01</div><h3>Foundations</h3></div>
-            <div class="unit-card" onclick="showUnit('unit2')"><div class="icon-circle">02</div><h3>Branches</h3></div>
-            <div class="unit-card" onclick="showUnit('unit3')"><div class="icon-circle">03</div><h3>Civil Liberties</h3></div>
-            <div class="unit-card" onclick="showUnit('unit4')"><div class="icon-circle">04</div><h3>Ideologies</h3></div>
-            <div class="unit-card" onclick="showUnit('unit5')"><div class="icon-circle">05</div><h3>Participation</h3></div>
+            <div class="unit-card" onclick="showUnit('unit1')"><div class="icon-circle">01</div><h3>Foundations of Democracy</h3></div>
+            <div class="unit-card" onclick="showUnit('unit2')"><div class="icon-circle">02</div><h3>Branches & Federalism</h3></div>
+            <div class="unit-card" onclick="showUnit('unit3')"><div class="icon-circle">03</div><h3>Civil Liberties (Coming)</h3></div>
+            <div class="unit-card" onclick="showUnit('unit4')"><div class="icon-circle">04</div><h3>Political Ideologies</h3></div>
+            <div class="unit-card" onclick="showUnit('unit5')"><div class="icon-circle">05</div><h3>Participation (Coming)</h3></div>
         </div>
     </div>
 
     <div id="unit-menu" class="hidden">
         <h2 id="unit-title" style="color: var(--primary)"></h2>
         <div class="mode-select">
-            <button class="mode-btn" onclick="startTrivia()">📝 Start Trivia</button>
-            <button class="mode-btn" onclick="startFRQ()">📊 Data FRQ</button>
+            <button class="mode-btn" onclick="startTrivia()">📝 Trivia Mode</button>
+            <button class="mode-btn" onclick="startFRQ()">📊 FRQ Practice</button>
         </div>
         <button class="action-btn" style="background: #666" onclick="showTab('home')">← Back to Units</button>
     </div>
 
     <div id="quiz-content" class="hidden">
-        <div id="quiz-results" class="hidden">
-        <h2 style="color: var(--primary)">Unit Review Complete!</h2>
-        <div id="grade-display" style="font-size: 2rem; font-weight: bold; margin: 20px 0;"></div>
-        <div id="review-list" style="text-align: left; background: #f8f9fa; padding: 20px; border-radius: 10px; max-height: 300px; overflow-y: auto; border: 1px solid #ddd;">
-            <h3 style="margin-top: 0;">Review these terms:</h3>
-            <ul id="missed-questions"></ul>
-        </div>
-        <button class="action-btn" onclick="resetUnit()">Study Again</button>
-        <button class="action-btn" style="background:#666" onclick="showTab('home')">Home</button>
-    </div>
         <div class="progress-box"><div id="bar"></div></div>
-        <h2 id="q-text" style="color: var(--primary)"></h2>
+        <h2 id="q-text" style="color: var(--primary); min-height: 80px;"></h2>
         <div id="opt-container" class="opt-grid"></div>
         <p id="stat-line" style="margin-top:20px; font-weight:bold; color: #666;"></p>
     </div>
 
+    <div id="quiz-results" class="hidden">
+        <h2 style="color: var(--primary)">Results & Review</h2>
+        <div id="grade-display" style="font-size: 2.2rem; font-weight: bold; margin: 15px 0;"></div>
+        <div id="review-list">
+            <h3 style="margin-top: 0;">Missed Terms:</h3>
+            <ul id="missed-questions" style="list-style: none; padding: 0;"></ul>
+        </div>
+        <button class="action-btn" onclick="startTrivia()">Try Again</button>
+        <button class="action-btn" style="background:#666" onclick="showTab('home')">Home</button>
+    </div>
+
     <div id="frq-content" class="hidden">
-        <h2 id="frq-unit-title"></h2>
-        <div id="frq-display"></div>
-        <textarea id="user-ans" placeholder="Draft your FRQ response here..."></textarea>
-        <button class="action-btn" onclick="toggleRubric()">Check Rubric</button>
+        <h2 id="frq-header" style="color: var(--primary)"></h2>
+        <div id="frq-display" style="text-align: left;"></div>
+        <textarea id="user-ans" placeholder="Type your practice response here..."></textarea>
+        <button class="action-btn" onclick="toggleRubric()">Show/Hide Rubric</button>
         <div id="frq-rubric" class="rubric-box"></div>
         <br>
-        <button class="action-btn" style="background:#666" onclick="resetUnit()">Exit Practice</button>
+        <button class="action-btn" style="background:#666" onclick="resetUnit()">Exit FRQ</button>
     </div>
 </div>
 
@@ -92,222 +94,174 @@ const data = {
     unit1: {
         title: "Unit 1: Foundations",
         trivia: [
-            {q: "The set of rules, institutions, and people who exercise political authority over a group.", a: "Government", options: ["Government", "Politics", "Democracy", "State Sovereignty"]},
+            {q: "The set of rules, institutions, and people who exercise political authority.", a: "Government", options: ["Government", "Politics", "Democracy", "State Sovereignty"]},
             {q: "The process of determining who gets what, when, and how in a society.", a: "Politics", options: ["Politics", "Public Policy", "Civics", "Federalism"]},
             {q: "A system of government where power is vested in the people.", a: "Democracy", options: ["Democracy", "Autocracy", "Theocracy", "Oligarchy"]},
-            {q: "The widely shared beliefs, values, and norms about how citizens relate to government and to one another.", a: "American Political Culture", options: ["American Political Culture", "Political Ideology", "Socialization", "Partisanship"]},
-            {q: "The structures of government, such as the presidency, Congress, and the courts, that create and enforce public policy.", a: "Political Institutions", options: ["Political Institutions", "Interest Groups", "Political Parties", "Bureaucracy"]},
-            {q: "A government where representatives are elected by the people and operate under a supreme law (Constitution).", a: "Constitutional Republic", options: ["Constitutional Republic", "Direct Democracy", "Monarchy", "Confederation"]},
-            {q: "The document that established the philosophical foundations of popular sovereignty and natural rights.", a: "Declaration of Independence", options: ["Declaration of Independence", "Articles of Confederation", "Constitution", "Federalist No. 10"]},
-            {q: "The supreme law of the United States that provides the framework for the federal government.", a: "The Constitution", options: ["The Constitution", "Bill of Rights", "Mayflower Compact", "Magna Carta"]},
-            {q: "The first ten amendments to the Constitution, which protect individual liberties.", a: "Bill of Rights", options: ["Bill of Rights", "Preamble", "Article I", "Federalist Papers"]},
-            {q: "Formal changes or additions made to the U.S. Constitution over time.", a: "Amendments", options: ["Amendments", "Executive Orders", "Statutes", "Ratifications"]},
-            {q: "The three distinct parts of the U.S. government defined by Articles I, II, and III.", a: "Legislative, Executive and Judicial", options: ["Legislative, Executive and Judicial", "Federal, State, and Local", "Senate, House, and Cabinet", "President, VP, and Speaker"]},
-            {q: "The division of government power among three branches to prevent any one from becoming too powerful.", a: "Separation of Powers", options: ["Separation of Powers", "Checks and Balances", "Federalism", "Popular Sovereignty"]},
-            {q: "A system that allows each branch of government to limit the powers of the other branches.", a: "Checks and Balances", options: ["Checks and Balances", "Separation of Powers", "Interposition", "Judicial Activism"]},
-            {q: "A system where power is divided between the national government and state governments.", a: "Federalism", options: ["Federalism", "Unitary System", "Confederation", "Devolution"]}
+            {q: "Shared beliefs and values about how citizens relate to government.", a: "American Political Culture", options: ["American Political Culture", "Political Ideology", "Socialization", "Partisanship"]},
+            {q: "The structures of government like Congress and the Presidency.", a: "Political Institutions", options: ["Political Institutions", "Interest Groups", "Parties", "Bureaucracy"]},
+            {q: "A government where representatives are elected and operate under supreme law.", a: "Constitutional Republic", options: ["Constitutional Republic", "Direct Democracy", "Monarchy", "Confederation"]},
+            {q: "The document establishing popular sovereignty and natural rights.", a: "Declaration of Independence", options: ["Declaration of Independence", "Articles of Confederation", "Constitution", "Fed 10"]},
+            {q: "The supreme law of the U.S. framework.", a: "The Constitution", options: ["The Constitution", "Bill of Rights", "Mayflower Compact", "Magna Carta"]},
+            {q: "The first ten amendments protecting individual liberties.", a: "Bill of Rights", options: ["Bill of Rights", "Preamble", "Article I", "Federalist Papers"]},
+            {q: "Formal changes made to the Constitution.", a: "Amendments", options: ["Amendments", "Executive Orders", "Statutes", "Ratifications"]},
+            {q: "The three distinct parts of U.S. Government.", a: "Legislative, Executive and Judicial", options: ["Legislative, Executive and Judicial", "Federal, State, Local", "Senate, House, Cabinet", "President, VP, Speaker"]},
+            {q: "Division of power among branches to prevent tyranny.", a: "Separation of Powers", options: ["Separation of Powers", "Checks and Balances", "Federalism", "Sovereignty"]},
+            {q: "System allowing branches to limit each other's power.", a: "Checks and Balances", options: ["Checks and Balances", "Separation of Powers", "Federalism", "Interposition"]},
+            {q: "Division of power between national and state governments.", a: "Federalism", options: ["Federalism", "Unitary System", "Confederation", "Devolution"]}
         ],
         frqs: [
-            {
-                title: "Type 1: Quantitative Analysis (Federalism)",
-                prompts: "<b>Table: Federal Grants to States (2000-2020)</b><br>2000: $285B | 2010: $512B | 2020: $721B<br><br>A) Identify the trend in federal grants to states.<br>B) Describe a reason why the federal government provides categorical grants to states.<br>C) Explain how the data reflects the concept of <b>Cooperative Federalism</b>.",
-                rubric: "A: Federal grants have increased steadily. B: To encourage states to meet national standards or goals (e.g., education). C: It shows the 'blurring' of lines between levels as the national government uses money to influence state policy."
-            },
-            {
-                title: "Type 2: Concept Application (Checks & Balances)",
-                prompts: "<b>Scenario:</b> The President issues an Executive Order regarding immigration. Several state governors sue, claiming the President exceeded his constitutional authority.<br><br>A) Describe the role of the <b>Judicial Branch</b> in this scenario.<br>B) Explain how <b>Separation of Powers</b> is intended to prevent the President from having unlimited power.<br>C) Describe one way Congress could respond if they disagree with the Executive Order.",
-                rubric: "A: The courts can use Judicial Review to declare the order unconstitutional. B: By dividing power into three branches, no single branch can act without oversight. C: Congress could pass a law to override the order or withhold funding for its implementation."
-            },
-            {
-                title: "Type 3: Comparison (Foundational Docs)",
-                prompts: "<b>Comparison:</b> Federalist No. 10 vs. Brutus No. 1<br><br>A) Identify the main fear <b>Brutus No. 1</b> had regarding a large republic.<br>B) Describe how <b>Federalist No. 10</b> argued that a large republic would actually protect liberty.<br>C) Explain how the <b>Great Compromise</b> addressed the tension between large and small states during the convention.",
-                rubric: "A: Fear that a central government would become too distant and tyrannical. B: Madison argued 'factions' would cancel each other out in a large republic. C: It created a bicameral legislature (House by population, Senate by equal vote)."
-            }
-        ],
-   unit2: {
-        title: "Unit 2: Interactions Among Branches & Federalism",
-        trivia: [
-            {q: "The process of determining who gets what, when, and how.", a: "Politics", options: ["Politics", "Government", "Democracy", "Lawmaking"]},
-            {q: "Rights that people are born with and that no government can take away.", a: "Natural rights", options: ["Natural rights", "Social Contract", "Statutory rights", "Civil liberties"]},
-            {q: "The idea that people allow their government to rule over them to ensure an orderly society.", a: "Social Contract", options: ["Social Contract", "Popular sovereignty", "Republicanism", "Natural law"]},
-            {q: "The principle that the government's right to rule comes from the people.", a: "Popular sovereignty", options: ["Popular sovereignty", "Republicanism", "Inalienable rights", "Elitism"]},
-            {q: "A system in which the government's authority comes from the people through elected representatives.", a: "Republicanism", options: ["Republicanism", "Participatory democracy", "Civil society", "Unitary system"]},
-            {q: "Theory that widespread political participation is essential for democratic government.", a: "Participatory democracy", options: ["Participatory democracy", "Pluralist theory", "Elitist theory", "Republic"]},
-            {q: "Theory that policy making is a competition among groups, each one pressing for its own preferred policies.", a: "Pluralist theory", options: ["Pluralist theory", "Elitist theory", "Participatory democracy", "Civil society"]},
-            {q: "Theory that a small number of wealthy individuals/groups hold the most power.", a: "Elitist theory", options: ["Elitist theory", "Pluralist theory", "Constitutionalism", "Federalism"]},
-            {q: "A government with one house in the legislature, as seen in the Articles of Confederation.", a: "Unicameral", options: ["Unicameral", "Bicameral", "Federal", "Confederal"]},
-            {q: "A popular uprising against the government of Massachusetts that led to the Constitutional Convention.", a: "Shays' Rebellion", options: ["Shays' Rebellion", "Whiskey Rebellion", "Boston Tea Party", "Stono Rebellion"]},
-            {q: "Court order requiring the government to show cause for detaining someone.", a: "Writ of habeas corpus", options: ["Writ of habeas corpus", "Bill of Attainder", "Ex post facto law", "Writ of Certiorari"]},
-            {q: "A law that punishes an individual without a trial (prohibited by the Constitution).", a: "Bill of Attainder", options: ["Bill of Attainder", "Ex post facto law", "Habeas corpus", "Summary judgment"]},
-            {q: "A law that punishes people for acts that were not illegal when they were committed.", a: "Ex post facto laws", options: ["Ex post facto laws", "Bills of Attainder", "Common law", "Statutory law"]},
-            {q: "Plan calling for a strong national government with representation based on population.", a: "Virginia Plan", options: ["Virginia Plan", "New Jersey Plan", "Great Compromise", "Three-Fifths Compromise"]},
-            {q: "Plan calling for a unicameral legislature with equal votes for each state.", a: "New Jersey Plan", options: ["New Jersey Plan", "Virginia Plan", "Connecticut Plan", "Great Compromise"]},
-            {q: "Settled the debate over representation by creating a bicameral legislature.", a: "Great Compromise", options: ["Great Compromise", "Three-Fifths Compromise", "Grand Committee", "Article V"]},
-            {q: "The clause giving Congress the power to carry out its enumerated powers.", a: "Necessary and proper clause", options: ["Necessary and proper clause", "Commerce clause", "Supremacy clause", "Elastic clause"]},
-            {q: "Powers specifically granted to the federal government by the Constitution.", a: "Expressed/enumerated powers", options: ["Expressed/enumerated powers", "Implied powers", "Reserved powers", "Concurrent powers"]},
-            {q: "The Constitution and federal laws take precedence over state laws.", a: "Supremacy clause", options: ["Supremacy clause", "Tenth Amendment", "Commerce clause", "Full faith and credit"]},
-            {q: "Supreme Court case that established the supremacy of the national government over the states.", a: "McCulloch v. Maryland", options: ["McCulloch v. Maryland", "Marbury v. Madison", "U.S. v. Lopez", "Gibbons v. Ogden"]},
-            {q: "Requires states to recognize the public acts and records of other states.", a: "Full faith and credit clause", options: ["Full faith and credit clause", "Privileges and immunities", "Extradition", "Commerce clause"]},
-            {q: "Constitutional amendment stating powers not given to the federal government belong to the states.", a: "Tenth amendment", options: ["Tenth amendment", "Fourteenth Amendment", "First Amendment", "Ninth Amendment"]},
-            {q: "Powers shared by both the federal and state governments.", a: "Concurrent powers", options: ["Concurrent powers", "Exclusive powers", "Reserved powers", "Denied powers"]},
-            {q: "Federal grants that can be used only for specific purposes or 'categories' of state and local spending.", a: "Categorical grants", options: ["Categorical grants", "Block grants", "Revenue sharing", "Unfunded mandates"]},
-            {q: "Federal grants given more or less automatically to states to support broad programs.", a: "Block grant", options: ["Block grant", "Categorical grant", "Project grant", "Formula grant"]},
-            {q: "The transfer of powers and responsibilities from the federal government to the states.", a: "Devolution", options: ["Devolution", "Federalism", "Incorporation", "Interposition"]}
-        ],
-        frqs: [
-            {title: "Unit 2: Federalism & Powers", prompts: "A) Identify a power reserved to the states.<br>B) Explain how the <b>Commerce Clause</b> has been used to expand federal power.<br>C) Describe the difference between a categorical grant and a block grant.", rubric: "A: Education, policing, voting. B: Allows Congress to regulate local activities if they affect interstate commerce. C: Categorical has 'strings attached'; Block grants offer flexibility."}
+            {title: "Quantitative Analysis", prompts: "A) Identify the trend in federal grants to states. B) Describe a reason for categorical grants. C) Explain Cooperative Federalism.", rubric: "Grants increased over time. Money used to meet national goals. Blurring of lines between levels."},
+            {title: "Concept Application", prompts: "Scenario: President issues an immigration order. States sue. A) Judicial role? B) Separation of Powers? C) Congressional response?", rubric: "A: Judicial Review. B: Branches limit actions. C: Legislation or funding cut."}
         ]
     },
-    unit3: { title: "Unit 3: Civil Rights", trivia: [], frqs: [] },
+    unit2: {
+        title: "Unit 2: Branches & Federalism",
+        trivia: [
+            {q: "Rights that people are born with (Locke's idea).", a: "Natural rights", options: ["Natural rights", "Social Contract", "Statutory rights", "Civil liberties"]},
+            {q: "Agreement to give up some liberty for government protection.", a: "Social Contract", options: ["Social Contract", "Popular sovereignty", "Republicanism", "Natural law"]},
+            {q: "Idea that government's right to rule comes from the people.", a: "Popular sovereignty", options: ["Popular sovereignty", "Republicanism", "Inalienable rights", "Elitism"]},
+            {q: "Theory that widespread participation is essential.", a: "Participatory democracy", options: ["Participatory democracy", "Pluralist theory", "Elitist theory", "Republic"]},
+            {q: "Theory that policy is a competition among groups.", a: "Pluralist theory", options: ["Pluralist theory", "Elitist theory", "Participatory", "Civil society"]},
+            {q: "Theory that a wealthy small group holds most power.", a: "Elitist theory", options: ["Elitist theory", "Pluralist theory", "Constitutionalism", "Federalism"]},
+            {q: "A one-house legislature.", a: "Unicameral", options: ["Unicameral", "Bicameral", "Federal", "Confederal"]},
+            {q: "Uprising showing the weakness of the Articles.", a: "Shays' Rebellion", options: ["Shays' Rebellion", "Whiskey Rebellion", "Tea Party", "Stono"]},
+            {q: "Law punishing a person without a trial (prohibited).", a: "Bill of Attainder", options: ["Bill of Attainder", "Ex post facto law", "Habeas corpus", "Certiorari"]},
+            {q: "Large state plan (population based).", a: "Virginia Plan", options: ["Virginia Plan", "New Jersey Plan", "Great Compromise", "3/5ths"]},
+            {q: "Small state plan (equal votes).", a: "New Jersey Plan", options: ["New Jersey Plan", "Virginia Plan", "3/5ths", "Great Compromise"]},
+            {q: "Created a bicameral legislature.", a: "Great Compromise", options: ["Great Compromise", "3/5ths Compromise", "Grand Committee", "Article V"]},
+            {q: "Clause allowing Congress to carry out enumerated powers.", a: "Necessary and proper clause", options: ["Necessary and proper clause", "Commerce clause", "Supremacy", "Elastic clause"]},
+            {q: "Established federal supremacy over states.", a: "McCulloch v. Maryland", options: ["McCulloch v. Maryland", "Marbury v. Madison", "U.S. v. Lopez", "Gibbons"]},
+            {q: "States must recognize other states' public acts.", a: "Full faith and credit clause", options: ["Full faith and credit clause", "Privileges", "Extradition", "Commerce"]},
+            {q: "Powers not given to Feds belong to states.", a: "Tenth amendment", options: ["Tenth amendment", "14th Amendment", "1st Amendment", "9th"]},
+            {q: "Powers shared by federal and state governments.", a: "Concurrent powers", options: ["Concurrent powers", "Exclusive", "Reserved", "Denied"]},
+            {q: "Federal grants with 'strings attached'.", a: "Categorical grants", options: ["Categorical grants", "Block grants", "Revenue sharing", "Mandates"]},
+            {q: "Transferring power from feds back to states.", a: "Devolution", options: ["Devolution", "Federalism", "Incorporation", "Interposition"]}
+        ],
+        frqs: [{title: "Unit 2 FRQ", prompts: "Explain the difference between categorical and block grants.", rubric: "Categorical = specific purpose. Block = broad flexibility."}]
+    },
     unit4: {
         title: "Unit 4: Ideologies",
         trivia: [
-            {q: "The set of attitudes and beliefs that shape political behavior in a country.", a: "Political Culture", options: ["Political Culture", "Political Ideology", "Socialization", "Public Opinion"]},
-            {q: "The belief in self-reliance and that people should get ahead on their own.", a: "Individualism", options: ["Individualism", "Free Enterprise", "Rule of Law", "Socialism"]},
-            {q: "An economic system where the market determines prices with little government interference.", a: "Laissez-faire/free enterprise", options: ["Laissez-faire/free enterprise", "Command Economy", "Mixed Economy", "Keynesianism"]},
+            {q: "Set of attitudes shaping political behavior.", a: "Political Culture", options: ["Political Culture", "Ideology", "Socialization", "Public Opinion"]},
+            {q: "Belief in self-reliance and getting ahead on your own.", a: "Individualism", options: ["Individualism", "Free Enterprise", "Rule of Law", "Socialism"]},
             {q: "No one, including leaders, is above the law.", a: "Rule of law", options: ["Rule of law", "Individualism", "Privilege", "Right"]},
-            {q: "The process by which one acquires their political beliefs, often starting with family.", a: "Political socialization", options: ["Political socialization", "Globalization", "Generational effect", "Weighting"]},
-            {q: "Impact of major historical events on a specific age group's political views.", a: "Generational effect", options: ["Generational effect", "Life-cycle effect", "Globalization", "Socialization"]},
-            {q: "The trend of increasing global interconnectedness.", a: "Globalization", options: ["Globalization", "Outsourcing", "Fiscal Policy", "Monetary policy"]},
-            {q: "Adjusting poll results to match the known demographics of a population.", a: "Weighting", options: ["Weighting", "Random selection", "Sampling error", "Focus group"]},
-            {q: "A poll conducted as voters enter a voting location.", a: "Entrance survey", options: ["Entrance survey", "Exit poll", "Tracking poll", "Benchmark poll"]},
-            {q: "Continuous polls used to chart a candidate's daily rise or fall.", a: "Tracking polls", options: ["Tracking polls", "Benchmark poll", "Mass survey", "Scientific poll"]},
-            {q: "A large-scale survey of the entire public's opinion.", a: "Mass survey", options: ["Mass survey", "Focus group", "Sample", "Weighting"]},
-            {q: "Error resulting from the size or design of a poll's sample.", a: "Sampling error", options: ["Sampling error", "Question wording", "Question order", "Weighting"]},
-            {q: "Using interest rates and money supply to control the economy.", a: "Monetary policy", options: ["Monetary policy", "Fiscal Policy", "Keynesianism", "GDP"]},
-            {q: "Using taxing and spending to control the economy.", a: "Fiscal Policy", options: ["Fiscal Policy", "Monetary policy", "Laissez-faire", "CPI"]},
-            {q: "Health insurance for the elderly.", a: "Medicare", options: ["Medicare", "Medicaid", "Social Security", "HMO"]},
-            {q: "Health insurance for low-income individuals.", a: "Medicaid", options: ["Medicaid", "Medicare", "SNAP", "TANF"]},
-            {q: "Economic theory favoring tax cuts for businesses to stimulate growth.", a: "Supply-side Economics", options: ["Supply-side Economics", "Keynesian Economics", "Socialism", "Communism"]},
-            {q: "Economic theory favoring government spending to boost demand.", a: "Keynesian Economics", options: ["Keynesian Economics", "Supply-side Economics", "Monetary policy", "Capitalism"]},
-            {q: "The total value of all goods and services produced in a year.", a: "Gross Domestic Product (GDP)", options: ["Gross Domestic Product (GDP)", "CPI", "Inflation", "Recession"]},
-            {q: "Measures the change in prices of a 'basket' of goods to track inflation.", a: "Consumer Price Index (CPI)", options: ["Consumer Price Index (CPI)", "GDP", "Unemployment rate", "Monetary policy"]},
-            {q: "A period of two consecutive quarters of negative GDP growth.", a: "Economic recession", options: ["Economic recession", "Inflation", "Deflation", "Stagflation"]},
-            {q: "An economy where the government makes all decisions.", a: "Command-and-control economy", options: ["Command-and-control economy", "Mixed economy", "Capitalism", "Laissez-faire"]},
-            {q: "An economy combining private enterprise and government regulation.", a: "Mixed economy", options: ["Mixed economy", "Command economy", "Socialism", "Pure Capitalism"]},
-            {q: "A small group (10-15) used for in-depth discussion of issues.", a: "Focus group", options: ["Focus group", "Mass survey", "Scientific poll", "Random selection"]},
-            {q: "Every person has an equal chance of being selected for a poll.", a: "Random selection", options: ["Random selection", "Weighting", "Stratified sampling", "Sample"]},
-            {q: "A poll taken at the very start of a campaign.", a: "Benchmark poll", options: ["Benchmark poll", "Tracking poll", "Exit poll", "Entrance survey"]},
-            {q: "A belief in individual liberty and minimal government in all areas.", a: "Libertarianism", options: ["Libertarianism", "Progressivism", "Liberalism", "Conservatism"]},
-            {q: "Belief in traditional values and smaller government in the economy.", a: "Conservatism", options: ["Conservatism", "Liberalism", "Socialism", "Communism"]},
-            {q: "Moving production to other countries to save costs.", a: "Outsourcing", options: ["Outsourcing", "Globalization", "Free Enterprise", "Capitalism"]},
-            {q: "Something the government is obligated to provide/protect.", a: "Right", options: ["Right", "Privilege", "Power", "Responsibility"]},
-            {q: "A benefit that can be granted or taken away.", a: "Privilege", options: ["Privilege", "Right", "Liberty", "Mandate"]},
-            {q: "A system where the means of production are privately owned.", a: "Capitalism", options: ["Capitalism", "Socialism", "Communism", "Command economy"]},
-            {q: "Political attitudes change as you get older.", a: "Life-cycle effect", options: ["Life-cycle effect", "Generational effect", "Globalization", "Socialization"]},
-            {q: "Ideology focused on social reform and wealth redistribution.", a: "Progressivism", options: ["Progressivism", "Libertarianism", "Conservatism", "Capitalism"]},
-            {q: "The rise in general price levels over time.", a: "Inflation", options: ["Inflation", "Recession", "GDP", "CPI"]}
+            {q: "Process of acquiring beliefs (often from family).", a: "Political socialization", options: ["Political socialization", "Globalization", "Weighting", "Polling"]},
+            {q: "Adjusting poll results to demographics.", a: "Weighting", options: ["Weighting", "Random selection", "Sampling error", "Focus group"]},
+            {q: "Poll taken at the start of a campaign.", a: "Benchmark poll", options: ["Benchmark poll", "Tracking poll", "Exit poll", "Entrance"]},
+            {q: "Large-scale survey of the entire public.", a: "Mass survey", options: ["Mass survey", "Focus group", "Sample", "Weighting"]},
+            {q: "Using interest rates to control the economy.", a: "Monetary policy", options: ["Monetary policy", "Fiscal Policy", "Keynesianism", "GDP"]},
+            {q: "Using taxing and spending to control economy.", a: "Fiscal Policy", options: ["Fiscal Policy", "Monetary policy", "CPI", "Laissez-faire"]},
+            {q: "Economic theory favoring tax cuts for businesses.", a: "Supply-side Economics", options: ["Supply-side Economics", "Keynesian", "Socialism", "Communism"]},
+            {q: "Measure of goods prices to track inflation.", a: "Consumer Price Index (CPI)", options: ["Consumer Price Index (CPI)", "GDP", "Unemployment", "Monetary"]},
+            {q: "Ideology favoring minimal government in all areas.", a: "Libertarianism", options: ["Libertarianism", "Progressivism", "Liberalism", "Conservatism"]}
         ],
-        frqs: [{title: "Quantitative Analysis", prompts: "Interpret the relationship between ideology and policy support.", rubric: "Key focus on economic regulation vs. social liberty."}]
-    },
-    unit5: { title: "Unit 5: Participation", trivia: [], frqs: [] }
+        frqs: [{title: "Quantitative Analysis", prompts: "Interpret the relationship between ideology and policy support.", rubric: "Liberals tend to support regulation; Conservatives support free market."}]
+    }
 };
 
+let currentUnit = '';
 let qIdx = 0;
 let score = 0;
-let missedQuestions = []; // New array to track errors
+let missedQuestions = [];
+let frqIdx = 0;
+
+function showTab(tab) {
+    document.getElementById('home-content').classList.remove('hidden');
+    document.getElementById('unit-menu').classList.add('hidden');
+    document.getElementById('quiz-content').classList.add('hidden');
+    document.getElementById('quiz-results').classList.add('hidden');
+    document.getElementById('frq-content').classList.add('hidden');
+}
+
+function showUnit(key) {
+    currentUnit = key;
+    document.getElementById('home-content').classList.add('hidden');
+    document.getElementById('unit-menu').classList.remove('hidden');
+    document.getElementById('unit-title').innerText = data[key].title;
+}
 
 function startTrivia() {
-    if (data[currentUnit].trivia.length === 0) {
-        alert("Trivia for this unit is coming soon!");
-        return;
+    if (!data[currentUnit].trivia || data[currentUnit].trivia.length === 0) {
+        alert("Trivia for this unit coming soon!"); return;
     }
-    // Reset variables for a fresh game
-    qIdx = 0; 
-    score = 0; 
-    missedQuestions = []; 
-    
+    qIdx = 0; score = 0; missedQuestions = [];
     document.getElementById('unit-menu').classList.add('hidden');
-    document.getElementById('quiz-results').classList.add('hidden'); // Hide results if re-playing
+    document.getElementById('quiz-results').classList.add('hidden');
     document.getElementById('quiz-content').classList.remove('hidden');
     loadQ();
 }
 
 function loadQ() {
-    const unitTrivia = data[currentUnit].trivia;
-    const q = unitTrivia[qIdx];
+    const list = data[currentUnit].trivia;
+    const q = list[qIdx];
     document.getElementById('q-text').innerText = q.q;
-    document.getElementById('stat-line').innerText = `Question: ${qIdx + 1} / ${unitTrivia.length}`;
-    document.getElementById('bar').style.width = `${((qIdx) / unitTrivia.length) * 100}%`;
+    document.getElementById('stat-line').innerText = `Question ${qIdx + 1} of ${list.length}`;
+    document.getElementById('bar').style.width = `${((qIdx) / list.length) * 100}%`;
     
     const container = document.getElementById('opt-container');
     container.innerHTML = '';
-    
     q.options.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'btn-opt';
         btn.innerText = opt;
         btn.onclick = () => {
-            const btns = document.querySelectorAll('.btn-opt');
-            btns.forEach(b => b.disabled = true);
-            
-            if(opt === q.a) { 
-                btn.classList.add('correct'); 
-                score++; 
-            } else { 
+            const all = document.querySelectorAll('.btn-opt');
+            all.forEach(b => b.disabled = true);
+            if(opt === q.a) { btn.classList.add('correct'); score++; }
+            else { 
                 btn.classList.add('wrong'); 
-                // Save the missed question info
-                missedQuestions.push({question: q.q, correct: q.a});
-                // Highlight the correct one for the user
-                btns.forEach(b => { if(b.innerText === q.a) b.classList.add('correct'); });
+                missedQuestions.push({q: q.q, a: q.a});
+                all.forEach(b => { if(b.innerText === q.a) b.classList.add('correct'); });
             }
-            
             setTimeout(() => {
                 qIdx++;
-                if(qIdx < unitTrivia.length) loadQ();
+                if(qIdx < list.length) loadQ();
                 else showResults();
-            }, 1200); // Slightly longer pause so they can see the right answer
+            }, 1200);
         };
         container.appendChild(btn);
     });
 }
 
 function showResults() {
-    const unitTrivia = data[currentUnit].trivia;
     document.getElementById('quiz-content').classList.add('hidden');
     document.getElementById('quiz-results').classList.remove('hidden');
+    const total = data[currentUnit].trivia.length;
+    const pct = Math.round((score / total) * 100);
+    let grade = pct >= 90 ? "A 🇺🇸" : pct >= 80 ? "B" : pct >= 70 ? "C" : "D";
+    if(pct < 65) grade = "F";
     
-    // Calculate Grade
-    const percent = Math.round((score / unitTrivia.length) * 100);
-    let letterGrade = percent >= 90 ? "A 🇺🇸" : percent >= 80 ? "B" : percent >= 70 ? "C" : "D";
-    if (percent < 65) letterGrade = "F (Keep Studying!)";
-
-    document.getElementById('grade-display').innerHTML = `
-        <span style="color: ${percent >= 70 ? 'var(--success)' : 'var(--accent)'}">
-            ${percent}% - Grade: ${letterGrade}
-        </span><br>
-        <small>${score} out of ${unitTrivia.length} correct</small>
-    `;
-
-    // Populate Review List
-    const list = document.getElementById('missed-questions');
-    list.innerHTML = '';
-    if (missedQuestions.length === 0) {
-        list.innerHTML = "<li>🎉 Perfect score! You mastered this unit.</li>";
+    document.getElementById('grade-display').innerHTML = `<span style="color:${pct >= 70 ? 'var(--success)' : 'var(--accent)'}">${pct}% - Grade: ${grade}</span><br><small>${score}/${total} Correct</small>`;
+    
+    const mList = document.getElementById('missed-questions');
+    mList.innerHTML = '';
+    if(missedQuestions.length === 0) {
+        mList.innerHTML = "<li>🎉 Perfect Score! Master of Democracy.</li>";
     } else {
-        missedQuestions.forEach(item => {
-            list.innerHTML += `<li style="margin-bottom:10px;"><strong>Q:</strong> ${item.question}<br><span style="color:var(--success)"><strong>Correct Answer:</strong> ${item.correct}</span></li>`;
+        missedQuestions.forEach(m => {
+            mList.innerHTML += `<li style="border-bottom:1px solid #ddd; padding:10px 0;"><strong>Q:</strong> ${m.q}<br><span style="color:var(--success)"><strong>Answer:</strong> ${m.a}</span></li>`;
         });
     }
 }
 
 function startFRQ() {
-    if (data[currentUnit].frqs.length === 0) {
-        alert("FRQs for this unit are coming soon!");
-        return;
+    if (!data[currentUnit].frqs || data[currentUnit].frqs.length === 0) {
+        alert("FRQ for this unit coming soon!"); return;
     }
     document.getElementById('unit-menu').classList.add('hidden');
     document.getElementById('frq-content').classList.remove('hidden');
-    const frq = data[currentUnit].frqs[0];
-    document.getElementById('frq-unit-title').innerText = frq.title;
-    document.getElementById('frq-display').innerHTML = `<p style="background:#eee; padding:15px; border-radius:8px;">${frq.prompts}</p>`;
+    const frq = data[currentUnit].frqs[frqIdx];
+    document.getElementById('frq-header').innerText = frq.title;
+    document.getElementById('frq-display').innerHTML = `<p style="background:#eee; padding:20px; border-radius:10px; line-height:1.6;">${frq.prompts}</p>`;
     document.getElementById('frq-rubric').innerHTML = `<strong>Scoring Rubric:</strong><br>${frq.rubric}`;
     document.getElementById('frq-rubric').style.display = 'none';
+    document.getElementById('user-ans').value = '';
+    frqIdx = (frqIdx + 1) % data[currentUnit].frqs.length;
 }
 
 function toggleRubric() {
     const r = document.getElementById('frq-rubric');
-    r.style.display = (r.style.display === 'block') ? 'none' : 'block';
+    r.style.display = r.style.display === 'block' ? 'none' : 'block';
 }
 
 function resetUnit() { showUnit(currentUnit); }
