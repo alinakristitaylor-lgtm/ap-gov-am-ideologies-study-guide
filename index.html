@@ -10,8 +10,7 @@
         body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e3799 0%, #eb2f06 100%); min-height: 100vh; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .nav-container { display: flex; width: 100%; max-width: 850px; margin-bottom: -2px; }
         .tab-btn { flex: 1; padding: 15px; border: none; background: rgba(255,255,255,0.2); color: white; font-weight: bold; cursor: pointer; border-radius: 15px 15px 0 0; }
-        .tab-btn.active { background: var(--white); color: var(--primary); }
-        #main-card { background: var(--white); width: 100%; max-width: 850px; border-radius: 0 0 20px 20px; padding: 2.5rem; min-height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        #main-card { background: var(--white); width: 100%; max-width: 850px; border-radius: 0 0 20px 20px; padding: 2.5rem; min-height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); box-sizing: border-box; }
         .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
         .unit-card { background: #f8f9fa; border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; }
         .unit-card:hover { border-color: var(--secondary); transform: translateY(-3px); }
@@ -20,18 +19,28 @@
         .mode-btn { padding: 20px; border: 2px solid var(--secondary); border-radius: 12px; background: white; color: var(--primary); font-weight: bold; cursor: pointer; }
         .mode-btn:hover { background: var(--secondary); color: white; }
         .hidden { display: none; }
-        .action-btn { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; }
+        .action-btn { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; font-weight: bold; }
+        /* Game Styles */
+        .progress-box { width: 100%; background: #eee; height: 14px; border-radius: 7px; margin-bottom: 2rem; overflow: hidden; }
+        #bar { width: 0%; height: 100%; background: linear-gradient(90deg, #4a69bd, #eb2f06); transition: 0.4s; }
+        .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn-opt { padding: 16px; border: 2px solid #dcdde1; border-radius: 12px; background: #f8f9fa; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .correct { background: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .wrong { background: var(--accent) !important; color: white !important; border-color: var(--accent) !important; }
+        textarea { width: 100%; height: 120px; border-radius: 10px; padding: 10px; margin-top: 10px; border: 2px solid #ddd; }
+        .rubric-box { display: none; background: #fff3cd; border-left: 6px solid #ffc107; padding: 15px; margin-top: 15px; text-align: left; }
     </style>
 </head>
 <body>
 
 <div class="nav-container">
-    <button id="tab-home" class="tab-btn active" onclick="showTab('home')">🏠 Home</button>
+    <button id="tab-home" class="tab-btn" onclick="showTab('home')" style="background: var(--white); color: var(--primary);">🏠 Home</button>
 </div>
 
 <div id="main-card">
     <div id="home-content">
-        <h1>AP Government Portal</h1>
+        <h1>AP Government Study Portal</h1>
+        <p>Select a unit to begin your review:</p>
         <div class="home-grid">
             <div class="unit-card" onclick="showUnit('unit1')"><div class="icon-circle">01</div><h3>Foundations</h3></div>
             <div class="unit-card" onclick="showUnit('unit2')"><div class="icon-circle">02</div><h3>Branches</h3></div>
@@ -42,27 +51,46 @@
     </div>
 
     <div id="unit-menu" class="hidden">
-        <h2 id="unit-title"></h2>
+        <h2 id="unit-title" style="color: var(--primary)"></h2>
         <div class="mode-select">
-            <button class="mode-btn" onclick="initActivity('trivia')">📝 Trivia</button>
-            <button class="mode-btn" onclick="initActivity('frq')">📊 Data FRQ</button>
+            <button class="mode-btn" onclick="startTrivia()">📝 Start Trivia</button>
+            <button class="mode-btn" onclick="startFRQ()">📊 Data FRQ</button>
         </div>
-        <button class="action-btn" onclick="showTab('home')">Back Home</button>
+        <button class="action-btn" style="background: #666" onclick="showTab('home')">← Back to Units</button>
     </div>
 
-    <div id="game-content" class="hidden">
-        <div id="game-inner"></div>
-        <button class="action-btn" onclick="resetUnit()">Exit</button>
+    <div id="quiz-content" class="hidden">
+        <div class="progress-box"><div id="bar"></div></div>
+        <h2 id="q-text" style="color: var(--primary)"></h2>
+        <div id="opt-container" class="opt-grid"></div>
+        <p id="stat-line" style="margin-top:20px; font-weight:bold; color: #666;"></p>
+    </div>
+
+    <div id="frq-content" class="hidden">
+        <h2 id="frq-unit-title"></h2>
+        <div id="frq-display"></div>
+        <textarea id="user-ans" placeholder="Draft your FRQ response here..."></textarea>
+        <button class="action-btn" onclick="toggleRubric()">Check Rubric</button>
+        <div id="frq-rubric" class="rubric-box"></div>
+        <br>
+        <button class="action-btn" style="background:#666" onclick="resetUnit()">Exit Practice</button>
     </div>
 </div>
 
 <script>
 const data = {
-    unit1: { title: "Unit 1: Foundations", trivia: [], frqs: [] },
-    unit2: { title: "Unit 2: Interactions Among Branches", trivia: [], frqs: [] },
-    unit3: { title: "Unit 3: Civil Liberties & Rights", trivia: [], frqs: [] },
+    unit1: {
+        title: "Unit 1: Foundations",
+        trivia: [
+            {q: "Compromise that created a bicameral legislature.", a: "Great Compromise", options: ["Great Compromise", "3/5ths Compromise", "New Jersey Plan", "Virginia Plan"]},
+            {q: "System where power is divided between national and state levels.", a: "Federalism", options: ["Federalism", "Unitary", "Confederacy", "Democracy"]}
+        ],
+        frqs: [{title: "Separation of Powers", prompts: "Explain how checks and balances limit presidential power.", rubric: "Mention veto override, appointment confirmation, and impeachment."}]
+    },
+    unit2: { title: "Unit 2: Branches", trivia: [], frqs: [] },
+    unit3: { title: "Unit 3: Civil Rights", trivia: [], frqs: [] },
     unit4: {
-        title: "Unit 4: American Political Ideologies",
+        title: "Unit 4: Ideologies",
         trivia: [
             {q: "The set of attitudes and beliefs that shape political behavior in a country.", a: "Political Culture", options: ["Political Culture", "Political Ideology", "Socialization", "Public Opinion"]},
             {q: "The belief in self-reliance and that people should get ahead on their own.", a: "Individualism", options: ["Individualism", "Free Enterprise", "Rule of Law", "Socialism"]},
@@ -100,17 +128,20 @@ const data = {
             {q: "Ideology focused on social reform and wealth redistribution.", a: "Progressivism", options: ["Progressivism", "Libertarianism", "Conservatism", "Capitalism"]},
             {q: "The rise in general price levels over time.", a: "Inflation", options: ["Inflation", "Recession", "GDP", "CPI"]}
         ],
-        frqs: [{title: "Unit 4 Data Analysis", prompts: "Interpret voter turnout graphs.", rubric: "Key focus on demographics."}]
+        frqs: [{title: "Quantitative Analysis", prompts: "Interpret the relationship between ideology and policy support.", rubric: "Key focus on economic regulation vs. social liberty."}]
     },
-    unit5: { title: "Unit 5: Political Participation", trivia: [], frqs: [] }
+    unit5: { title: "Unit 5: Participation", trivia: [], frqs: [] }
 };
 
 let currentUnit = '';
+let qIdx = 0;
+let score = 0;
 
-function showTab(tab) {
+function showTab(type) {
     document.getElementById('home-content').classList.remove('hidden');
     document.getElementById('unit-menu').classList.add('hidden');
-    document.getElementById('game-content').classList.add('hidden');
+    document.getElementById('quiz-content').classList.add('hidden');
+    document.getElementById('frq-content').classList.add('hidden');
 }
 
 function showUnit(key) {
@@ -120,10 +151,67 @@ function showUnit(key) {
     document.getElementById('unit-title').innerText = data[key].title;
 }
 
-function initActivity(type) {
+function startTrivia() {
+    if (data[currentUnit].trivia.length === 0) {
+        alert("Trivia for this unit is coming soon!");
+        return;
+    }
     document.getElementById('unit-menu').classList.add('hidden');
-    document.getElementById('game-content').classList.remove('hidden');
-    document.getElementById('game-inner').innerHTML = `<h3>${type.toUpperCase()} - ${data[currentUnit].title}</h3>`;
+    document.getElementById('quiz-content').classList.remove('hidden');
+    qIdx = 0; score = 0;
+    loadQ();
+}
+
+function loadQ() {
+    const unitTrivia = data[currentUnit].trivia;
+    const q = unitTrivia[qIdx];
+    document.getElementById('q-text').innerText = q.q;
+    document.getElementById('stat-line').innerText = `Question: ${qIdx + 1} / ${unitTrivia.length}`;
+    document.getElementById('bar').style.width = `${((qIdx) / unitTrivia.length) * 100}%`;
+    
+    const container = document.getElementById('opt-container');
+    container.innerHTML = '';
+    
+    q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-opt';
+        btn.innerText = opt;
+        btn.onclick = () => {
+            const btns = document.querySelectorAll('.btn-opt');
+            btns.forEach(b => b.disabled = true);
+            if(opt === q.a) { btn.classList.add('correct'); score++; }
+            else { btn.classList.add('wrong'); }
+            
+            setTimeout(() => {
+                qIdx++;
+                if(qIdx < unitTrivia.length) loadQ();
+                else {
+                    alert(`Unit Review Complete! Score: ${score}/${unitTrivia.length}`);
+                    resetUnit();
+                }
+            }, 1000);
+        };
+        container.appendChild(btn);
+    });
+}
+
+function startFRQ() {
+    if (data[currentUnit].frqs.length === 0) {
+        alert("FRQs for this unit are coming soon!");
+        return;
+    }
+    document.getElementById('unit-menu').classList.add('hidden');
+    document.getElementById('frq-content').classList.remove('hidden');
+    const frq = data[currentUnit].frqs[0];
+    document.getElementById('frq-unit-title').innerText = frq.title;
+    document.getElementById('frq-display').innerHTML = `<p style="background:#eee; padding:15px; border-radius:8px;">${frq.prompts}</p>`;
+    document.getElementById('frq-rubric').innerHTML = `<strong>Scoring Rubric:</strong><br>${frq.rubric}`;
+    document.getElementById('frq-rubric').style.display = 'none';
+}
+
+function toggleRubric() {
+    const r = document.getElementById('frq-rubric');
+    r.style.display = (r.style.display === 'block') ? 'none' : 'block';
 }
 
 function resetUnit() { showUnit(currentUnit); }
