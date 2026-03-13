@@ -7,31 +7,117 @@
     <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1fa-1f1f8.png">
     <style>
         :root { --primary: #1e3799; --secondary: #4a69bd; --accent: #eb2f06; --success: #10ac84; --bg: #f1f2f6; --white: #ffffff; }
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e3799 0%, #eb2f06 100%); min-height: 100vh; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: linear-gradient(135deg, #1e3799 0%, #eb2f06 100%); 
+            background-attachment: fixed;
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
         .nav-container { display: flex; width: 100%; max-width: 850px; margin-bottom: -2px; }
         .tab-btn { flex: 1; padding: 15px; border: none; background: rgba(255,255,255,0.2); color: white; font-weight: bold; cursor: pointer; border-radius: 15px 15px 0 0; }
-        #main-card { background: var(--white); width: 100%; max-width: 850px; border-radius: 0 0 20px 20px; padding: 2.5rem; min-height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); box-sizing: border-box; text-align: center; }
-        .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .unit-card { background: #f8f9fa; border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; text-align: left; }
+
+        #main-card { 
+            background: var(--white); 
+            width: 100%; 
+            max-width: 850px; 
+            border-radius: 15px; 
+            padding: 1.5rem; 
+            min-height: 600px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+            box-sizing: border-box; 
+            text-align: center; 
+        }
+
+        /* Responsive Grid: Stacks on mobile, 2-col on desktop */
+        .home-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+
+        .unit-card { 
+            background: #f8f9fa; 
+            border: 2px solid #eee; 
+            padding: 15px; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            text-align: left; 
+        }
+
         .unit-card:hover { border-color: var(--secondary); transform: translateY(-3px); }
-        .icon-circle { background: var(--primary); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
-        .mode-select { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        .mode-btn { padding: 20px; border: 2px solid var(--secondary); border-radius: 12px; background: white; color: var(--primary); font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-        .mode-btn:hover { background: var(--secondary); color: white; }
+        
+        .icon-circle { 
+            background: var(--primary); color: white; width: 45px; height: 45px; 
+            border-radius: 50%; display: flex; align-items: center; 
+            justify-content: center; font-weight: bold; flex-shrink: 0; 
+        }
+
+        /* Responsive Mode Selection */
+        .mode-select { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+
+        .mode-btn { 
+            padding: 18px; 
+            border: 2px solid var(--secondary); 
+            border-radius: 12px; 
+            background: white; 
+            color: var(--primary); 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+        }
+
         .hidden { display: none; }
-        .action-btn { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; font-weight: bold; }
-        /* Trivia Styles */
-        .progress-box { width: 100%; background: #eee; height: 14px; border-radius: 7px; margin-bottom: 2rem; overflow: hidden; }
+
+        .action-btn { 
+            background: var(--primary); color: white; padding: 12px 24px; 
+            border: none; border-radius: 8px; cursor: pointer; 
+            margin-top: 15px; font-weight: bold; width: 100%; max-width: 300px;
+        }
+
+        /* Trivia/Quiz Styles */
+        .progress-box { width: 100%; background: #eee; height: 10px; border-radius: 5px; margin-bottom: 1.5rem; overflow: hidden; }
         #bar { width: 0%; height: 100%; background: linear-gradient(90deg, #4a69bd, #eb2f06); transition: 0.4s; }
-        .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn-opt { padding: 16px; border: 2px solid #dcdde1; border-radius: 12px; background: #f8f9fa; cursor: pointer; font-weight: 600; font-size: 1rem; }
+        
+        .opt-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .btn-opt { padding: 14px; border: 2px solid #dcdde1; border-radius: 10px; background: #f8f9fa; cursor: pointer; font-weight: 600; font-size: 1rem; }
         .correct { background: var(--success) !important; color: white !important; border-color: var(--success) !important; }
         .wrong { background: var(--accent) !important; color: white !important; border-color: var(--accent) !important; }
-        textarea { width: 100%; height: 150px; border-radius: 10px; padding: 15px; margin-top: 10px; border: 2px solid #ddd; font-family: inherit; font-size: 1rem; }
-        .rubric-box { display: none; background: #fff3cd; border-left: 6px solid #ffc107; padding: 15px; margin-top: 15px; text-align: left; }
-        #review-list { text-align: left; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; border: 1px solid #ddd; }
-        /* Graph Styling */
-        .graph-container { background: #fdfdfd; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin: 15px 0; display: flex; justify-content: center; }
+
+        textarea { width: 100%; height: 150px; border-radius: 10px; padding: 15px; margin-top: 10px; border: 2px solid #ddd; font-family: inherit; font-size: 1rem; box-sizing: border-box; }
+        
+        .rubric-box { display: none; background: #fff3cd; border-left: 6px solid #ffc107; padding: 15px; margin-top: 15px; text-align: left; font-size: 0.95rem; }
+        
+        /* Responsive Graphs */
+        .graph-container { 
+            background: #fdfdfd; border: 1px solid #ddd; padding: 10px; 
+            border-radius: 8px; margin: 15px 0; display: flex; justify-content: center; 
+        }
+        .graph-container svg { width: 100%; height: auto; max-width: 400px; }
+
+        /* Desktop Adjustments */
+        @media (min-width: 650px) {
+            #main-card { padding: 2.5rem; border-radius: 0 0 20px 20px; }
+            .mode-select { grid-template-columns: 1fr 1fr; }
+            .opt-grid { grid-template-columns: 1fr 1fr; }
+            .action-btn { width: auto; }
+        }
     </style>
 </head>
 <body>
@@ -42,14 +128,14 @@
 
 <div id="main-card">
     <div id="home-content">
-        <h1 style="color: var(--primary)">AP Government Study Suite</h1>
+        <h1 style="color: var(--primary); font-size: 1.8rem;">AP Government Study Suite</h1>
         <p>Select a unit to start practicing:</p>
         <div class="home-grid">
-            <div class="unit-card" onclick="showUnit('unit1')"><div class="icon-circle">01</div><h3>Foundations of Democracy</h3></div>
-            <div class="unit-card" onclick="showUnit('unit2')"><div class="icon-circle">02</div><h3>Branches & Federalism</h3></div>
-            <div class="unit-card" onclick="showUnit('unit3')"><div class="icon-circle">03</div><h3>Civil Liberties & Rights</h3></div>
-            <div class="unit-card" onclick="showUnit('unit4')"><div class="icon-circle">04</div><h3>Political Ideologies</h3></div>
-            <div class="unit-card" onclick="showUnit('unit5')"><div class="icon-circle">05</div><h3>Political Participation</h3></div>
+            <div class="unit-card" onclick="showUnit('unit1')"><div class="icon-circle">01</div><h3>Foundations</h3></div>
+            <div class="unit-card" onclick="showUnit('unit2')"><div class="icon-circle">02</div><h3>Branches</h3></div>
+            <div class="unit-card" onclick="showUnit('unit3')"><div class="icon-circle">03</div><h3>Civil Liberties</h3></div>
+            <div class="unit-card" onclick="showUnit('unit4')"><div class="icon-circle">04</div><h3>Ideologies</h3></div>
+            <div class="unit-card" onclick="showUnit('unit5')"><div class="icon-circle">05</div><h3>Participation</h3></div>
         </div>
     </div>
 
@@ -64,26 +150,26 @@
 
     <div id="quiz-content" class="hidden">
         <div class="progress-box"><div id="bar"></div></div>
-        <h2 id="q-text" style="color: var(--primary); min-height: 80px;"></h2>
+        <h2 id="q-text" style="color: var(--primary); font-size: 1.2rem; min-height: 60px;"></h2>
         <div id="opt-container" class="opt-grid"></div>
         <p id="stat-line" style="margin-top:20px; font-weight:bold; color: #666;"></p>
     </div>
 
     <div id="quiz-results" class="hidden">
-        <h2 style="color: var(--primary)">Results & Review</h2>
-        <div id="grade-display" style="font-size: 2.2rem; font-weight: bold; margin: 15px 0;"></div>
-        <div id="review-list">
-            <h3 style="margin-top: 0;">Missed Terms:</h3>
-            <ul id="missed-questions" style="list-style: none; padding: 0;"></ul>
+        <h2 style="color: var(--primary)">Results</h2>
+        <div id="grade-display" style="font-size: 2rem; font-weight: bold; margin: 15px 0;"></div>
+        <div id="review-list" style="text-align: left; background: #f8f9fa; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid #ddd;">
+            <h3 style="margin-top: 0;">Review Missed Items:</h3>
+            <ul id="missed-questions" style="list-style: none; padding: 0; font-size: 0.9rem;"></ul>
         </div>
         <button class="action-btn" onclick="startTrivia()">Try Again</button>
         <button class="action-btn" style="background:#666" onclick="showTab('home')">Home</button>
     </div>
 
     <div id="frq-content" class="hidden">
-        <h2 id="frq-header" style="color: var(--primary)"></h2>
+        <h2 id="frq-header" style="color: var(--primary); font-size: 1.4rem;"></h2>
         <div id="frq-graph" class="graph-container hidden"></div>
-        <div id="frq-display" style="text-align: left;"></div>
+        <div id="frq-display" style="text-align: left; font-size: 1rem;"></div>
         <textarea id="user-ans" placeholder="Type your practice response here..."></textarea>
         <button class="action-btn" onclick="toggleRubric()">Show/Hide Rubric</button>
         <div id="frq-rubric" class="rubric-box"></div>
@@ -156,32 +242,32 @@ const data = {
     unit3: {
         title: "Unit 3: Civil Liberties & Civil Rights",
         trivia: [
-            {q: "The process by which the Bill of Rights is applied to the states via the 14th Amendment.", a: "Selective Incorporation", options: ["Selective Incorporation", "Sovereign Immunity", "Prior Restraint", "Judicial Activism"]},
-            {q: "Clause in the 1st Amendment prohibiting the government from creating an official religion.", a: "Establishment Clause", options: ["Establishment Clause", "Free Exercise Clause", "Commerce Clause", "Due Process Clause"]},
-            {q: "Case that ruled 'separate but equal' was constitutional.", a: "Plessy v. Ferguson", options: ["Plessy v. Ferguson", "Brown v. Board", "Gideon v. Wainwright", "Roe v. Wade"]},
-            {q: "The legal standard that evidence obtained illegally cannot be used in court.", a: "Exclusionary Rule", options: ["Exclusionary Rule", "Miranda Rule", "Double Jeopardy", "Due Process"]},
-            {q: "Which case established the 'clear and present danger' test for limiting speech?", a: "Schenck v. United States", options: ["Schenck v. United States", "Tinker v. Des Moines", "NYT v. US", "Citizens United"]},
-            {q: "Case protecting symbolic speech for students (black armbands).", a: "Tinker v. Des Moines", options: ["Tinker v. Des Moines", "Wisconsin v. Yoder", "Engel v. Vitale", "Schenck v. US"]},
-            {q: "Government action that prevents material from being published (censorship).", a: "Prior Restraint", options: ["Prior Restraint", "Libel", "Slander", "Free Exercise"]},
-            {q: "Case that required states to provide an attorney to defendants who cannot afford one.", a: "Gideon v. Wainwright", options: ["Gideon v. Wainwright", "Miranda v. Arizona", "McDonald v. Chicago", "Roe v. Wade"]},
-            {q: "Case that prohibited state-sponsored prayer in public schools.", a: "Engel v. Vitale", options: ["Engel v. Vitale", "Wisconsin v. Yoder", "Tinker v. Des Moines", "Schenck v. US"]},
-            {q: "Case that ruled the Amish did not have to send children to school past 8th grade.", a: "Wisconsin v. Yoder", options: ["Wisconsin v. Yoder", "Engel v. Vitale", "Roe v. Wade", "NYT v. US"]},
-            {q: "The 14th Amendment clause used to protect groups from discrimination.", a: "Equal Protection Clause", options: ["Equal Protection Clause", "Due Process Clause", "Establishment Clause", "Privileges Clause"]},
-            {q: "Case that incorporated the 2nd Amendment right to bear arms to the states.", a: "McDonald v. Chicago", options: ["McDonald v. Chicago", "U.S. v. Lopez", "Schenck v. US", "Gideon v. Wainwright"]},
-            {q: "Case that ended segregation in public schools.", a: "Brown v. Board of Education", options: ["Brown v. Board of Education", "Plessy v. Ferguson", "Roe v. Wade", "Shaw v. Reno"]},
-            {q: "Case that established a 'right to privacy' regarding abortion.", a: "Roe v. Wade", options: ["Roe v. Wade", "Griswold v. Connecticut", "Miranda v. Arizona", "Gideon v. Wainwright"]},
-            {q: "Written defamation of a person's character.", a: "Libel", options: ["Libel", "Slander", "Prior Restraint", "Symbolic Speech"]},
-            {q: "Case that bolstered freedom of the press by limiting prior restraint (Pentagon Papers).", a: "New York Times v. US", options: ["New York Times v. US", "Schenck v. US", "Tinker v. Des Moines", "Citizens United"]},
-            {q: "The rule that police must inform suspects of their rights before questioning.", a: "Miranda Rule", options: ["Miranda Rule", "Exclusionary Rule", "Good Faith Exception", "Due Process"]},
-            {q: "Non-verbal communication, such as burning a flag or wearing an armband.", a: "Symbolic Speech", options: ["Symbolic Speech", "Pure Speech", "Libel", "Prior Restraint"]},
-            {q: "The 14th Amendment clause used to protect individual liberties from state infringement.", a: "Due Process Clause", options: ["Due Process Clause", "Equal Protection Clause", "Supremacy Clause", "Elastic Clause"]},
-            {q: "The landmark letter written by MLK Jr. regarding nonviolent direct action.", a: "Letter from Birmingham Jail", options: ["Letter from Birmingham Jail", "Fed 10", "Fed 51", "Brutus 1"]}
+            {q: "Applying the Bill of Rights to states via 14th Amendment.", a: "Selective Incorporation", options: ["Selective Incorporation", "Prior Restraint", "Sovereign Immunity", "Judicial Activism"]},
+            {q: "Clause prohibiting an official government religion.", a: "Establishment Clause", options: ["Establishment Clause", "Free Exercise", "Elastic", "Commerce"]},
+            {q: "Case that ruled 'separate but equal' constitutional.", a: "Plessy v. Ferguson", options: ["Plessy v. Ferguson", "Brown v. Board", "Gideon", "Roe"]},
+            {q: "Illegal evidence cannot be used in court.", a: "Exclusionary Rule", options: ["Exclusionary Rule", "Miranda Rule", "Habeas Corpus", "Due Process"]},
+            {q: "Case establishing 'clear and present danger'.", a: "Schenck v. US", options: ["Schenck v. US", "Tinker", "NYT v. US", "McDonald"]},
+            {q: "Case protecting symbolic student speech.", a: "Tinker v. Des Moines", options: ["Tinker v. Des Moines", "Wisconsin v. Yoder", "Engel", "Schenck"]},
+            {q: "Government action preventing publication (censorship).", a: "Prior Restraint", options: ["Prior Restraint", "Libel", "Slander", "Free Exercise"]},
+            {q: "Required states to provide attorneys for the poor.", a: "Gideon v. Wainwright", options: ["Gideon v. Wainwright", "Miranda", "McDonald", "Roe"]},
+            {q: "Prohibited state-sponsored prayer in school.", a: "Engel v. Vitale", options: ["Engel v. Vitale", "Wisconsin v. Yoder", "Tinker", "Schenck"]},
+            {q: "Amish children don't have to attend school past 8th grade.", a: "Wisconsin v. Yoder", options: ["Wisconsin v. Yoder", "Engel", "Roe", "NYT"]},
+            {q: "14th Amendment clause protecting groups from discrimination.", a: "Equal Protection Clause", options: ["Equal Protection Clause", "Due Process", "Establishment", "Elastic"]},
+            {q: "Incorporated the 2nd Amendment to states.", a: "McDonald v. Chicago", options: ["McDonald v. Chicago", "US v. Lopez", "Schenck", "Gideon"]},
+            {q: "Ended segregation in public schools.", a: "Brown v. Board", options: ["Brown v. Board", "Plessy", "Roe", "Shaw v. Reno"]},
+            {q: "Established a 'right to privacy' regarding abortion.", a: "Roe v. Wade", options: ["Roe v. Wade", "Griswold", "Miranda", "Gideon"]},
+            {q: "Written defamation of character.", a: "Libel", options: ["Libel", "Slander", "Prior Restraint", "Speech"]},
+            {q: "Bolstered freedom of press (Pentagon Papers).", a: "NYT v. US", options: ["NYT v. US", "Schenck", "Tinker", "Citizens United"]},
+            {q: "Police must inform suspects of rights.", a: "Miranda Rule", options: ["Miranda Rule", "Exclusionary", "Good Faith", "Due Process"]},
+            {q: "Non-verbal communication like flag burning.", a: "Symbolic Speech", options: ["Symbolic Speech", "Pure Speech", "Libel", "Prior Restraint"]},
+            {q: "Clause protecting individual liberties from states.", a: "Due Process Clause", options: ["Due Process Clause", "Equal Protection", "Supremacy", "Elastic"]},
+            {q: "MLK's letter on nonviolent direct action.", a: "Letter from Birmingham Jail", options: ["Letter from Birmingham Jail", "Fed 10", "Fed 51", "Brutus 1"]}
         ],
         frqs: [
             {
                 title: "Type 4: SCOTUS Comparison",
-                prompts: "A) Identify the constitutional clause common to both <b>Engel v. Vitale</b> and <b>Wisconsin v. Yoder</b>.<br>B) Describe the difference in the rulings of these two cases.<br>C) Explain how these cases reflect the tension between government power and individual religious liberty.",
-                rubric: "A: 1st Amendment (Religion). B: Engel struck down prayer (Establishment); Yoder protected practice (Free Exercise). C: Governments must balance neutrality (no official religion) with freedom (allowing practice)."
+                prompts: "A) Identify the clause common to <b>Engel v. Vitale</b> and <b>Wisconsin v. Yoder</b>.<br>B) Describe the difference in rulings.<br>C) Explain the tension between govt power and religious liberty.",
+                rubric: "A: 1st Amdt Religion. B: Engel struck down prayer; Yoder protected practice. C: Balance neutrality with freedom."
             }
         ]
     },
@@ -189,22 +275,22 @@ const data = {
         title: "Unit 4: Ideologies",
         trivia: [
             {q: "Set of attitudes shaping political behavior.", a: "Political Culture", options: ["Political Culture", "Ideology", "Socialization", "Public Opinion"]},
-            {q: "Belief in self-reliance and getting ahead on your own.", a: "Individualism", options: ["Individualism", "Free Enterprise", "Rule of Law", "Socialism"]},
+            {q: "Belief in self-reliance and getting ahead.", a: "Individualism", options: ["Individualism", "Free Enterprise", "Rule of Law", "Socialism"]},
             {q: "No one, including leaders, is above the law.", a: "Rule of law", options: ["Rule of law", "Individualism", "Privilege", "Right"]},
-            {q: "Process of acquiring beliefs (often from family).", a: "Political socialization", options: ["Political socialization", "Globalization", "Weighting", "Polling"]},
+            {q: "Process of acquiring beliefs (often family).", a: "Political socialization", options: ["Political socialization", "Globalization", "Weighting", "Polling"]},
             {q: "Adjusting poll results to demographics.", a: "Weighting", options: ["Weighting", "Random selection", "Sampling error", "Focus group"]},
-            {q: "Poll taken at the start of a campaign.", a: "Benchmark poll", options: ["Benchmark poll", "Tracking poll", "Exit poll", "Entrance"]},
+            {q: "Poll taken at the start of a campaign.", a: "Benchmark poll", options: ["Benchmark poll", "Tracking", "Exit", "Entrance"]},
             {q: "Large-scale survey of the entire public.", a: "Mass survey", options: ["Mass survey", "Focus group", "Sample", "Weighting"]},
-            {q: "Using interest rates to control the economy.", a: "Monetary policy", options: ["Monetary policy", "Fiscal Policy", "Keynesianism", "GDP"]},
-            {q: "Using taxing and spending to control economy.", a: "Fiscal Policy", options: ["Fiscal Policy", "Monetary policy", "CPI", "Laissez-faire"]},
+            {q: "Using interest rates to control the economy.", a: "Monetary policy", options: ["Monetary policy", "Fiscal", "Keynesian", "GDP"]},
+            {q: "Using taxing and spending to control economy.", a: "Fiscal Policy", options: ["Fiscal Policy", "Monetary", "CPI", "Laissez-faire"]},
             {q: "Economic theory favoring tax cuts for businesses.", a: "Supply-side Economics", options: ["Supply-side Economics", "Keynesian", "Socialism", "Communism"]},
-            {q: "Measure of goods prices to track inflation.", a: "Consumer Price Index (CPI)", options: ["Consumer Price Index (CPI)", "GDP", "Unemployment", "Monetary"]},
+            {q: "Measure of goods prices to track inflation.", a: "CPI", options: ["CPI", "GDP", "Unemployment", "Monetary"]},
             {q: "Ideology favoring minimal government in all areas.", a: "Libertarianism", options: ["Libertarianism", "Progressivism", "Liberalism", "Conservatism"]}
         ],
         frqs: [
             {
                 title: "Quantitative Analysis", 
-                prompts: "A) Identify which ideology shows the highest support for environmental regulation. B) Describe the relationship between ideology and support for market intervention. C) Explain how these views affect party platforms.", 
+                prompts: "A) Identify which ideology shows highest support for regulation. B) Describe relationship between ideology and market intervention. C) Explain effect on party platforms.", 
                 graph: `<svg width="400" height="200" viewBox="0 0 400 200">
                     <rect x="50" y="30" width="80" height="140" fill="#1e3799" />
                     <rect x="160" y="80" width="80" height="90" fill="#4a69bd" />
@@ -215,33 +301,33 @@ const data = {
                     <text x="200" y="20" font-size="14" font-weight="bold" text-anchor="middle">Support for Emission Regulation (%)</text>
                     <line x1="40" y1="170" x2="380" y2="170" stroke="#333" stroke-width="2"/>
                 </svg>`,
-                rubric: "Liberals show highest support. As ideology becomes more conservative, support for government regulation tends to decrease. This leads to distinct party platforms (Democrats favoring regulation, Republicans favoring market solutions)."
+                rubric: "Liberals show highest support. Support decreases as ideology moves right. Affects platforms (Dems favor reg, Reps favor market)."
             }
         ]
     },
     unit5: {
-        title: "Unit 5: Political Participation",
+        title: "Unit 5: Participation",
         trivia: [
             {q: "The right to vote.", a: "Suffrage", options: ["Suffrage", "Enfranchisement", "Popular Sovereignty", "Civic Duty"]},
-            {q: "Amendment that granted women the right to vote.", a: "19th Amendment", options: ["19th Amendment", "15th Amendment", "26th Amendment", "24th Amendment"]},
-            {q: "Amendment that lowered the voting age to 18.", a: "26th Amendment", options: ["26th Amendment", "19th Amendment", "17th Amendment", "23rd Amendment"]},
-            {q: "The belief that one's political participation really matters.", a: "Political efficacy", options: ["Political efficacy", "Civic duty", "Political socialization", "Apathy"]},
-            {q: "A system of voting where the candidate with the most votes wins the whole state (used by 48 states).", a: "Winner-take-all", options: ["Winner-take-all", "Proportional representation", "Ranked choice", "Plurality voting"]},
-            {q: "Organizations that seek to influence public policy by getting their members elected to office.", a: "Political Parties", options: ["Political Parties", "Interest Groups", "PACs", "Iron Triangles"]},
-            {q: "Groups that seek to influence policy but do not run their own candidates for office.", a: "Interest Groups", options: ["Interest Groups", "Political Parties", "Factions", "Bureaucracy"]},
-            {q: "The relationship between an agency, a congressional committee, and an interest group.", a: "Iron Triangle", options: ["Iron Triangle", "Issue Network", "Federalism", "Separation of Powers"]},
-            {q: "Case that ruled corporate/union funding of independent political broadcasts is protected speech.", a: "Citizens United v. FEC", options: ["Citizens United v. FEC", "McCain-Feingold", "Buckley v. Valeo", "Baker v. Carr"]},
-            {q: "A shift in the electoral coalition, such as the 'Solid South' moving from Democrat to Republican.", a: "Party realignment", options: ["Party realignment", "Dealignment", "Gerrymandering", "Incumbency advantage"]},
-            {q: "Money given directly to a candidate which is strictly regulated.", a: "Hard Money", options: ["Hard Money", "Soft Money", "Dark Money", "Endowments"]},
-            {q: "The media's role in determining which issues become part of the public debate.", a: "Agenda Setting", options: ["Agenda Setting", "Horse-race Journalism", "Investigative Journalism", "Scorekeeper"]},
-            {q: "Media coverage that focuses on who is winning the polls rather than policy issues.", a: "Horse-race Journalism", options: ["Horse-race Journalism", "Watchdog Journalism", "Gatekeeping", "Narrowcasting"]},
-            {q: "A primary election where only registered party members can vote.", a: "Closed Primary", options: ["Closed Primary", "Open Primary", "Caucus", "General Election"]},
-            {q: "Amendment that prohibited poll taxes.", a: "24th Amendment", options: ["24th Amendment", "15th Amendment", "14th Amendment", "13th Amendment"]}
+            {q: "Amendment granting women the right to vote.", a: "19th Amendment", options: ["19th Amendment", "15th", "26th", "24th"]},
+            {q: "Amendment lowering voting age to 18.", a: "26th Amendment", options: ["26th Amendment", "19th", "17th", "23rd"]},
+            {q: "Belief that participation matters.", a: "Political efficacy", options: ["Political efficacy", "Civic duty", "Socialization", "Apathy"]},
+            {q: "Winner of most votes takes entire state.", a: "Winner-take-all", options: ["Winner-take-all", "Proportional", "Ranked choice", "Plurality"]},
+            {q: "Organizations seeking to win elections.", a: "Political Parties", options: ["Political Parties", "Interest Groups", "PACs", "Iron Triangles"]},
+            {q: "Groups seeking to influence policy but not run candidates.", a: "Interest Groups", options: ["Interest Groups", "Political Parties", "Factions", "Bureaucracy"]},
+            {q: "Relationship between agency, committee, and interest group.", a: "Iron Triangle", options: ["Iron Triangle", "Issue Network", "Federalism", "Powers"]},
+            {q: "Protected corporate/union independent broadcasts.", a: "Citizens United", options: ["Citizens United", "McCain-Feingold", "Buckley", "Baker"]},
+            {q: "Shift in electoral coalition (e.g. Solid South).", a: "Party realignment", options: ["Party realignment", "Dealignment", "Gerrymandering", "Incumbency"]},
+            {q: "Money given directly to a candidate (strictly regulated).", a: "Hard Money", options: ["Hard Money", "Soft Money", "Dark Money", "Endowments"]},
+            {q: "Media role determining public debate topics.", a: "Agenda Setting", options: ["Agenda Setting", "Horse-race", "Investigative", "Scorekeeper"]},
+            {q: "Media focus on polls rather than policy.", a: "Horse-race Journalism", options: ["Horse-race Journalism", "Watchdog", "Gatekeeping", "Narrowcasting"]},
+            {q: "Primary for registered party members only.", a: "Closed Primary", options: ["Closed Primary", "Open Primary", "Caucus", "General"]},
+            {q: "Amendment prohibiting poll taxes.", a: "24th Amendment", options: ["24th Amendment", "15th", "14th", "13th"]}
         ],
         frqs: [
             {
-                title: "Quantitative Analysis (Voter Turnout)",
-                prompts: "A) Identify the turnout percentage for Presidential vs Midterm elections in the graph. B) Describe one reason for this disparity. C) Explain how registration laws impact these numbers.",
+                title: "Quantitative Analysis (Turnout)",
+                prompts: "A) Identify turnout for Presidential vs Midterms. B) Describe reason for disparity. C) Explain impact of registration laws.",
                 graph: `<svg width="400" height="200" viewBox="0 0 400 200">
                     <rect x="80" y="90" width="100" height="80" fill="#4a69bd" />
                     <rect x="220" y="50" width="100" height="120" fill="#eb2f06" />
@@ -252,7 +338,7 @@ const data = {
                     <text x="200" y="20" font-size="14" font-weight="bold" text-anchor="middle">Voter Turnout Comparison</text>
                     <line x1="40" y1="170" x2="360" y2="170" stroke="#333" stroke-width="2"/>
                 </svg>`,
-                rubric: "Presidential: 60%, Midterm: 40%. Reasons: Higher media visibility, perceived importance of the President. Burdensome registration can lower turnout."
+                rubric: "Presidential 60%, Midterm 40%. Reasons: Visibility, perceived importance. Strict laws lower turnout."
             }
         ]
     }
@@ -280,9 +366,6 @@ function showUnit(key) {
 }
 
 function startTrivia() {
-    if (!data[currentUnit].trivia || data[currentUnit].trivia.length === 0) {
-        alert("Trivia for this unit coming soon!"); return;
-    }
     qIdx = 0; score = 0; missedQuestions = [];
     document.getElementById('unit-menu').classList.add('hidden');
     document.getElementById('quiz-results').classList.add('hidden');
@@ -296,7 +379,6 @@ function loadQ() {
     document.getElementById('q-text').innerText = q.q;
     document.getElementById('stat-line').innerText = `Question ${qIdx + 1} of ${list.length}`;
     document.getElementById('bar').style.width = `${((qIdx) / list.length) * 100}%`;
-    
     const container = document.getElementById('opt-container');
     container.innerHTML = '';
     q.options.forEach(opt => {
@@ -316,7 +398,7 @@ function loadQ() {
                 qIdx++;
                 if(qIdx < list.length) loadQ();
                 else showResults();
-            }, 1200);
+            }, 1000);
         };
         container.appendChild(btn);
     });
@@ -328,51 +410,27 @@ function showResults() {
     const total = data[currentUnit].trivia.length;
     const pct = Math.round((score / total) * 100);
     let grade = pct >= 90 ? "A 🇺🇸" : pct >= 80 ? "B" : pct >= 70 ? "C" : "D";
-    if(pct < 65) grade = "F";
-    
-    document.getElementById('grade-display').innerHTML = `<span style="color:${pct >= 70 ? 'var(--success)' : 'var(--accent)'}">${pct}% - Grade: ${grade}</span><br><small>${score}/${total} Correct</small>`;
-    
+    document.getElementById('grade-display').innerHTML = `<span style="color:${pct >= 70 ? 'var(--success)' : 'var(--accent)'}">${pct}% - ${grade}</span><br><small>${score}/${total} Correct</small>`;
     const mList = document.getElementById('missed-questions');
     mList.innerHTML = '';
-    if(missedQuestions.length === 0) {
-        mList.innerHTML = "<li>🎉 Perfect Score! Master of Democracy.</li>";
-    } else {
-        missedQuestions.forEach(m => {
-            mList.innerHTML += `<li style="border-bottom:1px solid #ddd; padding:10px 0;"><strong>Q:</strong> ${m.q}<br><span style="color:var(--success)"><strong>Answer:</strong> ${m.a}</span></li>`;
-        });
-    }
+    if(missedQuestions.length === 0) mList.innerHTML = "<li>🎉 Perfect Score!</li>";
+    else missedQuestions.forEach(m => { mList.innerHTML += `<li style="padding:8px 0; border-bottom:1px solid #ddd;"><strong>Q:</strong> ${m.q}<br><span style="color:var(--success)"><strong>Correct:</strong> ${m.a}</span></li>`; });
 }
 
 function startFRQ() {
     const unitData = data[currentUnit];
-    if (!unitData.frqs || unitData.frqs.length === 0) {
-        alert("FRQ for this unit coming soon!"); return;
-    }
     document.getElementById('unit-menu').classList.add('hidden');
     document.getElementById('frq-content').classList.remove('hidden');
-    
-    // Safety check for index
     if (frqIdx >= unitData.frqs.length) frqIdx = 0;
-    
     const frq = unitData.frqs[frqIdx];
     document.getElementById('frq-header').innerText = frq.title;
-    document.getElementById('frq-display').innerHTML = `<p style="background:#eee; padding:20px; border-radius:10px; line-height:1.6;">${frq.prompts}</p>`;
-    
-    // Handle Graph rendering
+    document.getElementById('frq-display').innerHTML = `<p style="background:#eee; padding:15px; border-radius:10px;">${frq.prompts}</p>`;
     const gBox = document.getElementById('frq-graph');
-    if (frq.graph) {
-        gBox.innerHTML = frq.graph;
-        gBox.classList.remove('hidden');
-    } else {
-        gBox.classList.add('hidden');
-    }
-
+    if (frq.graph) { gBox.innerHTML = frq.graph; gBox.classList.remove('hidden'); }
+    else gBox.classList.add('hidden');
     document.getElementById('frq-rubric').innerHTML = `<strong>Scoring Rubric:</strong><br>${frq.rubric}`;
     document.getElementById('frq-rubric').style.display = 'none';
     document.getElementById('user-ans').value = '';
-    
-    // Cycle to next FRQ for next session
-    frqIdx = (frqIdx + 1) % unitData.frqs.length;
 }
 
 function toggleRubric() {
